@@ -1,0 +1,24 @@
+.box {
+    text-decoration: none;
+    transition: .2s;
+}
+
+.box:hover {
+    opacity: 0.6;
+}
+
+.bg-boxshadow {
+    box-shadow: 0 0 3px 1px #e5e5e5;
+}
+
+.bg-boxshadow-warning {
+    box-shadow: 0 0 3px 1px #fac394;
+}
+
+.bg-boxshadow-danger {
+    box-shadow: 0 0 3px 1px #ec8181;
+}
+
+.link {
+    text-decoration: none;
+}

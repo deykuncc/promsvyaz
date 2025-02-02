@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Requests\Employees;
+
+use App\Enums\ConditionType;
+use App\Rules\UserNameRule;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'max:255', new UserNameRule()],
+            'external_id' => ['nullable'],
+            'gender_id' => ['required', 'exists:genders,id'],
+            'employment_date' => ['required', 'date_format:d.m.Y'],
+            'height' => ['required', 'integer', 'min:120', 'max:230'],
+            'size_clothes' => ['required', Rule::exists('sizes', 'id')->whereNull('deleted_at')],
+            'size_shoes' => ['required', Rule::exists('sizes', 'id')->whereNull('deleted_at')],
+            'size_hats' => ['required', Rule::exists('sizes', 'id')->whereNull('deleted_at')],
+            'profession_id' => ['required', Rule::exists('professions', 'id')->whereNull('deleted_at')],
+            'department_id' => ['required', Rule::exists('departments', 'id')->whereNull('deleted_at')],
+
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.id' => ['required', Rule::exists('items', 'id')->whereNull('deleted_at')],
+            'items.*.size' => ['required'],
+            'items.*.dateType' => ['required', 'in:days,months,years,unlimited'],
+            'items.*.dateValue' => ['nullable'],
+            'items.*.conditionType' => ['required', Rule::in(ConditionType::ids())],
+            'items.*.conditionValue' => ['required', 'min:1'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Введите ФИО',
+            'name.max' => 'Фио превышает :max символов',
+            'gender_id.required' => 'Выберите пол',
+            'gender_id.exists' => 'Пол не найден',
+            'employment_date.required' => 'Введите дату',
+            'employment_date.date_format' => 'Неправильный формат даты. Должно быть Д.М.Г',
+            'height.required' => 'Выберите рост',
+            'height.integer' => "Выберите рост",
+            'height.min' => 'Рост должен быть от :min см',
+            'height.max' => 'Рост должен быть до :max см',
+            'size_clothes.required' => 'Выберите размер одежды',
+            'size_clothes.exists' => 'Размер одежды не найдем',
+            'size_shoes.required' => 'Выберите размер обуви',
+            'size_shoes.exists' => 'Размер обуви не найден',
+            'size_hats.required' => 'Выберите размер головного убора',
+            'size_hats.exists' => 'Размер головного убора не найден',
+            'profession_id.required' => 'Выберите профессию',
+            'profession_id.exists' => 'Профессия не найдена',
+
+            'items.required' => 'Выберите СИЗ',
+            'items.min' => 'Выберите СИЗ',
+            'items.*.id.required' => 'СИЗ не найден',
+            'items.*.id.exists' => 'СИЗ не найден',
+            'items.*.size.required' => 'Выберите размер для СИЗ',
+            'items.*.dateType.required' => 'Заполните срок эксплуатации для СИЗ',
+            'items.*.conditionType.required' => 'Заполните количество для СИЗ',
+            'items.*.conditionType.in' => 'Выберите тип количества для СИЗ',
+        ];
+    }
+}

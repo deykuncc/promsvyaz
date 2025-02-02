@@ -1,0 +1,13 @@
+.swal2-toast {
+    font-size: 1rem; /* Уменьшаем шрифт */
+    min-height: auto; /* Убираем минимальную высоту */
+    width: auto !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    margin: unset !important;
+}
+
+.swal2-popup.swal2-toast .swal2-html-container{
+    margin: 15px 0 0 0 !important;
+}
