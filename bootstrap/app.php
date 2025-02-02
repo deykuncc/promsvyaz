@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\RoleApiMiddleware;
+use App\Http\Middleware\RoleWebMiddleware;
+use App\Http\Middleware\UserApiMiddleware;
 use App\Http\Middleware\UserWebMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,8 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'api/*'
         ]);
 
-        $middleware->alias(['user-web' => UserWebMiddleware::class]);
-
+        $middleware->alias([
+            'user-web' => UserWebMiddleware::class,
+            'user-api' => UserApiMiddleware::class,
+            'role-api' => RoleApiMiddleware::class,
+            'role-web' => RoleWebMiddleware::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

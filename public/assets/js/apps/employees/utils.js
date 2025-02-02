@@ -229,8 +229,6 @@ $(document).ready(function () {
             $(this).siblings('select').fadeIn(50);
         }
 
-        $("select[data-size-addon-item]").val("");
-
         $(this).siblings('select').html(html);
     });
 

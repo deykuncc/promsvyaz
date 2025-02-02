@@ -90,17 +90,13 @@
             <div class="filters__block">
                 <form method="GET">
                     <div class="filters__content">
-                        <select name="profession" class="form-select" style="width: 186px;" aria-label="Должность">
-                            <option selected>Должность</option>
-                            <option value="1">Мастер</option>
-                            <option value="1">Бригадир</option>
-                        </select>
                         <div>
-                            <input name="name" type="text" value="" class="form-control" placeholder="Название">
+                            <input name="name" type="text" value="{{$_GET['name'] ?? null}}" class="form-control"
+                                   placeholder="Название">
                         </div>
 
                         <div class="btn-addon">
-                            <a href="#" type="button" class="btn btn-primary d-flex align-items-center">
+                            <button href="#" type="submit" class="btn btn-primary d-flex align-items-center">
                                 <svg class="me-1" width="21px" height="21px" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -108,7 +104,7 @@
                                           fill="#fff"/>
                                 </svg>
                                 <span>Найти</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </form>

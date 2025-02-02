@@ -22,6 +22,11 @@ class Role extends Model
         return Attribute::make(get: fn($val) => self::NAMES[$val] ?? $val);
     }
 
+    public function nameOrig(): string
+    {
+        return $this->attributes['name'] ?? "";
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'role_id', 'id');

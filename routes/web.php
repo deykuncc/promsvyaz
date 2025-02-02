@@ -32,7 +32,7 @@ Route::group(['prefix' => 'employees', 'as' => 'employees.', 'middleware' => 'us
     Route::get("/edit/{employee}", [EmployeesController::class, 'edit'])->name('edit');
 });
 
-Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => ['user-web']], function () {
+Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => ['user-web', 'role-web:admin']], function () {
     Route::get("/", [UsersController::class, 'index'])->name('index');
     Route::get("/edit/{user}", [UsersController::class, 'edit'])->name('edit');
     Route::get('/add', [UsersController::class, 'create'])->name('create');
@@ -47,7 +47,6 @@ Route::group(['prefix' => "departments", 'as' => 'departments.', 'middleware' =>
 Route::group(['prefix' => "used", 'as' => 'used.', 'middleware' => ['user-web']], function () {
     Route::get("/", [UsedController::class, 'index'])->name('index');
 });
-
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('/statement', [ReportController::class, 'statement'])->name('statement');

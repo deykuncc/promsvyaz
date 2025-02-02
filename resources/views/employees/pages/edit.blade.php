@@ -136,7 +136,7 @@
                         <a href="{{route('reports.employee', ['employee' => $employee->id, 'category'=> 'clothes'])}}"
                            type="submit"
                            class="ms-3 btn btn-secondary">Распечатать одежду СИЗ</a>
-                        <button type="submit" class="ms-3 btn btn-primary">Сохранить изменения</button>
+                        <button type="submit" action="saveProfile" class="ms-3 btn btn-primary">Сохранить изменения</button>
                     </div>
 
                 </div>

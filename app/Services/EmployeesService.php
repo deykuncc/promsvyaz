@@ -62,6 +62,7 @@ class EmployeesService
         $data['first_name'] = $fullName[1];
         $data['last_name'] = $fullName[0];
         $data['middle_name'] = $fullName[2];
+        $data['employment_date'] = Carbon::createFromFormat('d.m.Y', $data['employment_date'])->format('Y-m-d H:i:s');
 
         DB::beginTransaction();
         try {

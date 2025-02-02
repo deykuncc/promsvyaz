@@ -40,9 +40,6 @@
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="form-label mt-3">Доступные СИЗ</label>
-                            <div>
-                                <input placeholder="Название..." id="search" class="form-control">
-                            </div>
                         </div>
                         <ul class="list-group" style="max-height: 250px; overflow-y: auto;" id="available-siz">
                             @if(!$items->isEmpty())

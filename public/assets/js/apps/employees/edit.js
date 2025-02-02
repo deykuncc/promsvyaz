@@ -114,7 +114,7 @@ function ajaxSaveNewItems(employeeId, items, deletedItems) {
 }
 
 $(document).ready(function () {
-    $("button[type='submit']").on('click', function () {
+    $("button[type='submit'][action='saveProfile']").on('click', function () {
         update();
     });
 
