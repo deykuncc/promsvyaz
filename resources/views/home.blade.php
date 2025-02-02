@@ -50,6 +50,6 @@
         </div>
     </div>
 </div>
-
+<script src="{{url('assets/js/plugins/bootstrap.bundle.js')}}"></script>
 </body>
 </html>

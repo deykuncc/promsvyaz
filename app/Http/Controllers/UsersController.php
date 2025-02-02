@@ -56,4 +56,11 @@ class UsersController extends Controller
 
         return view('users.pages.edit', $this->data);
     }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        return redirect()->route('login');
+    }
 }

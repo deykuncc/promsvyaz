@@ -48,8 +48,10 @@ Route::group(['prefix' => "used", 'as' => 'used.', 'middleware' => ['user-web']]
     Route::get("/", [UsedController::class, 'index'])->name('index');
 });
 
-Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+Route::group(['prefix' => 'reports', 'as' => 'reports.', 'middleware' => ['user-web']], function () {
     Route::get('/statement', [ReportController::class, 'statement'])->name('statement');
     Route::get('/order', [ReportController::class, 'order'])->name('statement');
     Route::get('/employee/{employee}', [ReportController::class, 'employee'])->name('employee');
 });
+
+Route::get("/logout", [UsersController::class, 'logout'])->name('logout')->middleware(['user-web']);
