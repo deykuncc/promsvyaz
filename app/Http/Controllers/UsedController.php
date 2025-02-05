@@ -57,7 +57,7 @@ class UsedController extends Controller
         $items->setCollection(
             $items->getCollection()->transform(function ($item) {
                 if ($item->until_at) {
-                    $item->format_until_at = floor(Carbon::now()->diffInDays($item->until_at));
+                    $item->format_until_at = $item->untilAtOrig() != null ? floor(Carbon::now()->diffInDays($item->until_at)) : "До износа";
                 }
                 return $item;
             })

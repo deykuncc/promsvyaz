@@ -40,6 +40,11 @@ class EmployeeItem extends Model
         );
     }
 
+    public function untilAtOrig(): ?string
+    {
+        return $this->attributes['until_at'] ?? null;
+    }
+
     public function quantityType(): Attribute
     {
         return Attribute::make(
