@@ -2,7 +2,7 @@
     data-id="{{$item->id}}"
     data-item-name="{{$item->item->name}}"
     data-type-size="{{$item->size?->typeOrig() ?? 'nosize'}}"
-    data-until="{{\Carbon\Carbon::parse($item->until_at)->format('d.m.Y')}}"
+    data-until="{{$item->untilAtOrig() !=null ? \Carbon\Carbon::parse($item->until_at)->format('d.m.Y') : null}}"
     data-size="{{$item->size ? $item->size->id : "Без размера"}}">
     <th>{{$item->id}}</th>
     <td><a href="#" class="text-decoration-none">{{$item->employee->department->name}}</a></td>
