@@ -28,5 +28,17 @@ class DatabaseSeeder extends Seeder
 
         $usersSeeder = new UsersSeeder();
         $usersSeeder->run();
+
+        $departmentsSeeder = new DepartmentsSeeder();
+        $departmentsSeeder->run();
+
+        $itemsSeeder = new ItemsSeeder();
+        $itemsSeeder->run();
+
+        $professionsSeeder = new ProfessionsSeeder();
+        $professionsSeeder->run();
+
+        $employeesSeeder = new EmployeesSeeder();
+        $employeesSeeder->run();
     }
 }

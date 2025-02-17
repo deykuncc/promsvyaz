@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Employee;
 use App\Models\EmployeeItem;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +44,7 @@ class ReportController extends Controller
             ->select(
                 'items.brand as name',
                 'sizes.size as size',
-                DB::raw("COUNT(employee_items.id) as count"),
+                DB::raw("SUM(employee_items.quantity) as count"),
                 'departments.name as department',
             )
             ->where('employee_items.deleted_at', null)
@@ -58,6 +57,7 @@ class ReportController extends Controller
             ->join('sizes', 'employee_items.size_id', '=', 'sizes.id')
             ->join('employees', 'employees.id', '=', 'employee_items.employee_id')
             ->join('departments', 'employees.department_id', '=', 'departments.id')
+            ->whereNotIn('items.category_id', [Category::CLEAR_ID])
             ->groupBy('items.brand', 'sizes.size', 'departments.name')
             ->get()
             ->groupBy(['name', 'department'])
@@ -97,7 +97,7 @@ class ReportController extends Controller
 
         $items = Employee::query()
             ->with(['items' => function ($query) {
-                $query->where('received', false)
+                $query->where('received', true)
                     ->with(['item', 'size']);
             }, 'department', 'profession'])
             ->orderBy('department_id')
