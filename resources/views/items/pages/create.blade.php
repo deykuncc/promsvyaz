@@ -49,9 +49,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Описание</label>
+                        <label for="description" class="form-label">Эксплуатационные характеристики</label>
                         <textarea type="text" name="itemDescription" class="form-control" id="itemDescription"
-                                  placeholder="Введите название СИЗ"></textarea>
+                                  placeholder="Введите эксплуатационные характеристики СИЗ"></textarea>
                     </div>
 
                     <div class="mb-3">

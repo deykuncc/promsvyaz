@@ -50,10 +50,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Описание</label>
+                        <label for="description" class="form-label">Эксплуатационные характеристики</label>
                         <textarea type="text" name="description" class="form-control"
                                   id="itemDescription"
-                                  placeholder="Введите название СИЗ">{{$item->description}}</textarea>
+                                  placeholder="Введите эксплуатационные характеристики СИЗ">{{$item->description}}</textarea>
                     </div>
 
                     <div class="mb-3">

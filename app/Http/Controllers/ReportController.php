@@ -21,12 +21,16 @@ class ReportController extends Controller
 
         if ($request->input('category') === "skin") {
             $employeeItems->whereHas('item', function ($query) {
-                $query->whereIn('category_id', [Category::HANDS_ID, Category::CLEAR_ID]);
+                $query->whereHas('category', function ($query) {
+                    $query->whereIn('name_eng', ['hands', 'clear']);
+                });
             });
             $description = "учета выдачи СИЗ (средства для защиты рук, смывающие и обезжиривающие средства)";
         } else {
             $employeeItems->whereHas('item', function ($query) {
-                $query->whereNotIn('category_id', [Category::HANDS_ID, Category::CLEAR_ID]);
+                $query->wherehas('category', function ($query) {
+                    $query->whereNotIn('name_eng', ['hands', 'clear']);
+                });
             });
             $description = "учета выдачи СИЗ (специальная обувь и специальная одежда)";
         }
@@ -57,7 +61,6 @@ class ReportController extends Controller
             ->join('sizes', 'employee_items.size_id', '=', 'sizes.id')
             ->join('employees', 'employees.id', '=', 'employee_items.employee_id')
             ->join('departments', 'employees.department_id', '=', 'departments.id')
-            ->whereNotIn('items.category_id', [Category::CLEAR_ID])
             ->groupBy('items.brand', 'sizes.size', 'departments.name')
             ->get()
             ->groupBy(['name', 'department'])

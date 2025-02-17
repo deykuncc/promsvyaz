@@ -14,7 +14,7 @@ function update() {
     let professionId = $('#professionId').val();
 
     ajaxUpdate(employeeId, lastName, firstName, middleName, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId).then((response) => {
-        // location.reload();
+        location.reload();
     }).catch((error) => {
         showToast(error.responseJSON.message, 0);
     })
