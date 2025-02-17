@@ -8,10 +8,10 @@
     <td><a href="#" class="text-decoration-none">{{$item->employee->department->name}}</a></td>
     <td><a href="#" class="text-decoration-none">{{$item->employee->name()}}</a></td>
     <td><a href="#" class="text-decoration-none">{{$item->item->name}}</a></td>
-    <td title="{{$item->until_at}}">{{ "{$item->until_at}" ? "{$item->format_until_at} дней" : "До износа" }}</td>
+    <td title="{{$item->until_at}}">{{ "{$item->untilAtOrig()}" ? "{$item->format_until_at} дней" : "До износа" }}</td>
     <td>
         <div class="form-check d-flex">
-            <input data-received class="form-check-input" {{$item->received ? 'checked' : ''}} type="checkbox" value="">
+            <input autocomplete="off" data-received class="form-check-input" {{$item->received ? 'checked' : ''}} type="checkbox" value="">
         </div>
     </td>
     <td>

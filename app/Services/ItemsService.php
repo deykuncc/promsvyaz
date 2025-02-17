@@ -16,7 +16,7 @@ class ItemsService
 
     public function index(): Collection
     {
-        return Item::all();
+        return Item::query()->with('category')->get();
     }
 
     /**

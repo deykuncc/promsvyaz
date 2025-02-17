@@ -1,11 +1,17 @@
 function create() {
-    let name = $("#name").val();
+    let lastName = $("#lastName").val();
+    let firstName = $("#firstName").val();
+    let middleName = $("#middleName").val();
     let login = $("#login").val();
     let password = $("#password").val();
     let role = $("#role").val();
 
-    if (name.length <= 0) {
-        return showToast('Введите ФИО', 0);
+    if (lastName.length <= 0) {
+        return showToast('Введите Фамилию', 0);
+    }
+
+    if (firstName.length <= 0) {
+        return showToast('Введите Имя', 0);
     }
 
     if (login.length <= 0) {
@@ -20,7 +26,7 @@ function create() {
         return showToast('Выберите должность', 0);
     }
 
-    ajaxCreate(name, login, password, role).then((response) => {
+    ajaxCreate(lastName, firstName, middleName, login, password, role).then((response) => {
         location.href = "/users";
     }).catch((error) => {
         showToast(error.responseJSON.message, 0);
@@ -29,14 +35,16 @@ function create() {
 
 }
 
-function ajaxCreate(name, login, password, role) {
+function ajaxCreate(lastName, firstName, middleName, login, password, role) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/api/users",
             type: 'post',
             dataType: 'json',
             data: {
-                name: name,
+                last_name: lastName,
+                first_name: firstName,
+                middle_name: middleName,
                 login: login,
                 password: password,
                 role_id: role,

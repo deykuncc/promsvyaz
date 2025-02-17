@@ -34,20 +34,36 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="professionName" class="form-label">ФИО</label>
-                        <input type="text" class="form-control" id="name"
-                               placeholder="ФИО" required>
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input type="text" class="form-control" id="lastName"
+                               placeholder="Иванов" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Имя</label>
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" type="text" class="form-control" id="firstName"
+                               placeholder="Иван" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Отчество</label>
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" type="text" class="form-control" id="middleName"
+                               placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Табельный номер</label>
-                        <input type="number" class="form-control" id="externalId"
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" type="text" class="form-control" id="externalId"
                                placeholder="Табельный номер" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="gender" class="form-label">Пол</label>
-                        <select name="gender" id="gender" class="form-select">
+                        <select  id="gender" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($genders as $gender)
                                 <option value="{{$gender->id}}">{{$gender->name}}</option>
@@ -56,14 +72,15 @@
                     </div>
 
                     <div class="mb-3">
+                        <input type="text" style="display:none" autocomplete="off">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input style="cursor: pointer" class="form-control" autocomplete="none" type="text"
-                               name="startDate" id="startDate">
+                        <input autocomplete="off" class="form-control" type="text"
+                                placeholder="25.12.2000" id="startDate">
                     </div>
 
                     <div class="mb-3">
                         <label for="height" class="form-label">Рост</label>
-                        <select name="height" id="height" class="form-select">
+                        <select  id="height" class="form-select">
                             <option selected>Выбрать</option>
                             @for($i = 135; $i <= 220; $i++)
                                 <option value="{{$i}}">{{$i}} см.</option>
@@ -73,7 +90,7 @@
 
                     <div class="mb-3">
                         <label for="sizeClothes" class="form-label">Размер одежды</label>
-                        <select name="sizeClothes" id="sizeClothes" class="form-select">
+                        <select id="sizeClothes" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($clothesSizes as $size)
                                 <option value="{{$size->id}}">{{$size->size}}</option>
@@ -83,7 +100,7 @@
 
                     <div class="mb-3">
                         <label for="sizeShoes" class="form-label">Размер обуви</label>
-                        <select name="sizeShoes" id="sizeShoes" class="form-select">
+                        <select  id="sizeShoes" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($shoesSizes as $size)
                                 <option value="{{$size->id}}">{{$size->size}}</option>
@@ -93,7 +110,7 @@
 
                     <div class="mb-3">
                         <label for="sizeHats" class="form-label">Размер головного убора</label>
-                        <select name="sizeHats" id="sizeHats" class="form-select">
+                        <select id="sizeHats" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($hatsSizes as $size)
                                 <option value="{{$size->id}}">{{$size->size}}</option>
@@ -103,7 +120,7 @@
 
                     <div class="mb-4">
                         <label for="departmentId" class="form-label">Участок</label>
-                        <select name="departmentId" id="departmentId" class="form-select">
+                        <select id="departmentId" class="form-select">
                             <option value="0" selected>Выбрать</option>
                             @foreach($departments as $department)
                                 <option value="{{$department->id}}">{{$department->name}}</option>
@@ -113,7 +130,7 @@
 
                     <div class="mb-4">
                         <label for="professionId" class="form-label">Профессия</label>
-                        <select name="professionId" id="professionId" class="form-select">
+                        <select id="professionId" class="form-select">
                             <option value="0" selected>Выбрать</option>
                             @foreach($professions as $profession)
                                 <option value="{{$profession->id}}">{{$profession->name}}</option>

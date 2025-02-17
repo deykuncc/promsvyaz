@@ -91,7 +91,7 @@
                 <form method="GET">
                     <div class="filters__content">
                         <div>
-                            <input name="name" type="text" value="{{$_GET['name'] ?? null}}" class="form-control"
+                            <input autocomplete="off" name="name" type="text" value="{{$_GET['name'] ?? null}}" class="form-control"
                                    placeholder="Название">
                         </div>
 

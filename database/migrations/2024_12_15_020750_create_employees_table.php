@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('clothes_size_id')->nullable()->default(null);
             $table->unsignedBigInteger('shoes_size_id')->nullable()->default(null);
             $table->unsignedBigInteger('hats_size_id')->nullable()->default(null);
-            $table->unsignedBigInteger('external_id')->nullable()->default(null);
+            $table->text('external_id')->nullable()->default(null);
             $table->string('last_name')->index();
             $table->string('first_name');
             $table->string('middle_name')->nullable()->default(null);

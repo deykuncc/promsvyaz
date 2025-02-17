@@ -90,8 +90,9 @@ class ProfessionsService
         $professionItems = ProfessionItem::query()
             ->select('item_id', 'profession_id')
             ->with('item', function ($query) {
-                $query->with('category')
-                    ->select('id', 'name');
+                $query->with(['category' => function ($query) {
+                    $query->select('id', 'name_eng');
+                }])->select('id', 'category_id', 'name');
             })
             ->where('profession_id', $professionId)->get();
 

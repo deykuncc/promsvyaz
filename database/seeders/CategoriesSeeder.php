@@ -14,9 +14,12 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         Category::query()->insert([
-            ['name' => 'Одежда'],
-            ['name' => 'Дерматология'],
-            ['name' => 'Прочее'],
+            ['name' => 'Одежда', 'name_eng' => 'clothes'],
+            ['name' => 'Головной убор', 'name_eng' => 'hats'],
+            ['name' => 'Обувь', 'name_eng' => 'shoes'],
+            ['name' => 'Перчатки', 'name_eng' => 'hands'],
+            ['name' => 'Средства защиты рук, смывающие', 'name_eng' => 'clear'],
+            ['name' => 'Прочее', 'name_eng' => 'others'],
         ]);
     }
 }

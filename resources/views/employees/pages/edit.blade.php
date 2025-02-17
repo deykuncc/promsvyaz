@@ -34,14 +34,33 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="professionName" class="form-label">ФИО</label>
-                        <input type="text" value="{{$employee->name()}}" class="form-control" id="name"
-                               placeholder="ФИО" required>
+                        <label  class="form-label">Фамилия</label>
+                        <input name="dfhgdfshd" type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" value="{{$employee->last_name}}" type="text" class="form-control"
+                               id="lastNames"
+                               placeholder="Иванов" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Имя</label>
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" value="{{$employee->first_name}}" type="text" class="form-control"
+                               id="firstName"
+                               placeholder="Иван" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Отчество</label>
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" {{$employee->middle_name}} type="text" class="form-control"
+                               id="middleName"
+                               placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Табельный номер</label>
-                        <input type="number" value="{{$employee->external_id}}" class="form-control" id="externalId"
+                        <input type="text" style="display:none" autocomplete="off">
+                        <input autocomplete="off" type="number" value="{{$employee->external_id}}" class="form-control" id="externalId"
                                placeholder="Табельный номер" required>
                     </div>
 
@@ -58,11 +77,10 @@
 
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input value="{{$employee->employement_date}}" style="cursor: pointer" class="form-control"
-                               autocomplete="none" type="text"
-                               name="startDate" id="startDate">
+                        <input value="{{$employee->employment_date}}" class="form-control"
+                               autocomplete="off" placeholder="25.12.2000" type="text"
+                               id="startDate">
                     </div>
-
                     <div class="mb-3">
                         <label for="height" class="form-label">Рост</label>
                         <select name="height" id="height" class="form-select">
@@ -136,7 +154,8 @@
                         <a href="{{route('reports.employee', ['employee' => $employee->id, 'category'=> 'clothes'])}}"
                            type="submit"
                            class="ms-3 btn btn-secondary">Распечатать одежду СИЗ</a>
-                        <button type="submit" action="saveProfile" class="ms-3 btn btn-primary">Сохранить изменения</button>
+                        <button type="submit" action="saveProfile" class="ms-3 btn btn-primary">Сохранить изменения
+                        </button>
                     </div>
 
                 </div>
@@ -168,7 +187,8 @@
                         </table>
                         <div class="d-flex justify-content-center">
                             <button type="button" data-action="addItem" class="btn btn-dark">Добавить СИЗ</button>
-                            <button type="button" data-action="saveNewItems" class="ms-2 btn btn-primary">Сохранить</button>
+                            <button type="button" data-action="saveNewItems" class="ms-2 btn btn-primary">Сохранить
+                            </button>
                         </div>
                     </div>
 
@@ -183,7 +203,6 @@
 <script src="{{url('assets/js/plugins/jquery-ui.js')}}"></script>
 <script src="{{url('assets/js/plugins/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
-<script src="{{url('assets/js/apps/employees/date.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/edit.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/utils.js')}}"></script>
 

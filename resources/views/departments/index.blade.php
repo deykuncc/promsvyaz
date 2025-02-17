@@ -71,7 +71,7 @@
             <div class="title__header">
                 <div class="title__header__content">
                     <div class="title__header__main__text">
-                        <div>Список участков</div>
+                        <div>Структурное подразделение</div>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                 <form method="GET">
                     <div class="filters__content">
                         <div>
-                            <input name="name" type="search" value="{{$_GET['name'] ?? null}}" class="form-control" placeholder="Название">
+                            <input autocomplete="off" name="name" type="search" value="{{$_GET['name'] ?? null}}" class="form-control" placeholder="Название">
                         </div>
 
                         <div class="btn-addon">

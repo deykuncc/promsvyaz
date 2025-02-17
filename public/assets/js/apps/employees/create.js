@@ -1,5 +1,7 @@
 function create() {
-    let name = $("#name").val();
+    let lastName = $("#lastName").val();
+    let firstName = $("#firstName").val();
+    let middleName = $("#middleName").val();
     let externalId = $("#externalId").val();
     let gender = $("#gender").val();
     let startDate = $("#startDate").val();
@@ -52,8 +54,12 @@ function create() {
         return showToast('Выберите СИЗ', 0);
     }
 
-    if (name.length <= 0) {
-        return showToast('Введите ФИО', 0);
+    if (firstName.length <= 0) {
+        return showToast('Введите Имя', 0);
+    }
+
+    if (lastName.length <= 0) {
+        return showToast('Введите Фамилию', 0);
     }
 
     if (gender.length <= 0) {
@@ -88,7 +94,7 @@ function create() {
         return showToast('Выберите профессию', 0);
     }
 
-    ajaxCreate(name, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId, items).then((response) => {
+    ajaxCreate(lastName, firstName, middleName, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId, items).then((response) => {
         location.href = "/employees";
     }).catch((error) => {
         showToast(error.responseJSON.message, 0);
@@ -97,14 +103,16 @@ function create() {
 
 }
 
-function ajaxCreate(name, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId, items) {
+function ajaxCreate(lastName, firstName, middleName, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId, items) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/api/employees",
             type: 'post',
             dataType: 'json',
             data: {
-                name: name,
+                last_name: lastName,
+                first_name: firstName,
+                middle_name: middleName,
                 external_id: externalId,
                 gender_id: gender,
                 employment_date: startDate,

@@ -22,15 +22,12 @@ class ReportController extends Controller
 
         if ($request->input('category') === "skin") {
             $employeeItems->whereHas('item', function ($query) {
-                $query->where('category_id', '=', Category::SKIN_ID);
+                $query->whereIn('category_id', [Category::HANDS_ID, Category::CLEAR_ID]);
             });
             $description = "учета выдачи СИЗ (средства для защиты рук, смывающие и обезжиривающие средства)";
         } else {
             $employeeItems->whereHas('item', function ($query) {
-                $query->where(function ($query) {
-                    $query->where('category_id', '=', Category::CLOTHES_ID);
-                    $query->orWhere('category_id', '=', Category::OTHER_ID);
-                });
+                $query->whereNotIn('category_id', [Category::HANDS_ID, Category::CLEAR_ID]);
             });
             $description = "учета выдачи СИЗ (специальная обувь и специальная одежда)";
         }
@@ -46,7 +43,7 @@ class ReportController extends Controller
     {
         $sizData = EmployeeItem::query()
             ->select(
-                'items.name as name',
+                'items.brand as name',
                 'sizes.size as size',
                 DB::raw("COUNT(employee_items.id) as count"),
                 'departments.name as department',
@@ -61,7 +58,7 @@ class ReportController extends Controller
             ->join('sizes', 'employee_items.size_id', '=', 'sizes.id')
             ->join('employees', 'employees.id', '=', 'employee_items.employee_id')
             ->join('departments', 'employees.department_id', '=', 'departments.id')
-            ->groupBy('items.name', 'sizes.size', 'departments.name')
+            ->groupBy('items.brand', 'sizes.size', 'departments.name')
             ->get()
             ->groupBy(['name', 'department'])
             ->map(function ($group, $name) {

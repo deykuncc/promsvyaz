@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
             'category_id.required' => 'Выберите категорию',
             'category_id.exists' => 'Категория не найдена',
             'description.max' => 'Описание не должно превышать :max символов',
-            'brand.max' => 'Бренд не должно превышать :max символов',
+            'brand.max' => 'Торговое наименование не должно превышать :max символов',
             'model.max' => 'Модель не должно превышать :max символов',
             'norm_clause.max' => "Пункт норм превышает :max символов"
         ];

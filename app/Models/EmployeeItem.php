@@ -36,7 +36,7 @@ class EmployeeItem extends Model
     public function untilAt(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value != null ? Carbon::parse($value)->format('d.m.Y') : "До износа",
+            get: fn($value) => $value != null ? Carbon::createFromFormat('Y-m-d H:i:s',$value)->format('d.m.Y') : "До износа",
         );
     }
 

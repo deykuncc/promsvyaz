@@ -17,7 +17,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:120', 'min:3', new UserNameRule()],
+            'first_name' => ['required', 'string', 'max:120'],
+            'last_name' => ['required', 'string', 'max:120'],
+            'middle_name' => ['nullable', 'string', 'max:120'],
             'login' => ['required', 'string', 'min:3', 'max:120'],
             'password' => ['nullable', 'string', 'min:6', 'max:64'],
             'role_id' => ['required', 'exists:roles,id'],
@@ -27,10 +29,20 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => "Введите ФИО",
-            'name.string' => "Введите ФИО",
-            'name.max' => "ФИО должно быть до :max символов",
-            'name.min' => "ФИО должно быть от :min символов",
+            'last_name.required' => "Введите Фамилию",
+            'last_name.string' => "Введите Фамилию",
+            'last_name.max' => "Фамилия должно быть до :max символов",
+            'last_name.min' => "Фамилия должно быть от :min символов",
+
+            'first_name.required' => "Введите Имя",
+            'first_name.string' => "Введите Имя",
+            'first_name.max' => "Имя должно быть до :max символов",
+            'first_name.min' => "Имя должно быть от :min символов",
+
+            'middle_name.string' => "Введите Отчество",
+            'middle_name.max' => "Отчество должно быть до :max символов",
+            'middle_name.min' => "Отчество должно быть от :min символов",
+
             'login.required' => "Введите Логин",
             'login.string' => "Введите Логин",
             'login.max' => "Логин должен быть до :max символов",

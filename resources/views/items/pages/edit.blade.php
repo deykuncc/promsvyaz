@@ -33,12 +33,6 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="professionName" class="form-label">Название СИЗ</label>
-                        <input type="text" class="form-control" value="{{$item->name}}" id="itemName"
-                               placeholder="Введите название СИЗ" required>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="category" class="form-label">Категория</label>
                         <select name="category" id="itemCategoryId" class="form-select">
                             <option selected>Выбрать</option>
@@ -50,6 +44,12 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="professionName" class="form-label">Наименование СИЗ</label>
+                        <input autocomplete="off" type="text" class="form-control" value="{{$item->name}}" id="itemName"
+                               placeholder="Введите наименование СИЗ" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="description" class="form-label">Описание</label>
                         <textarea type="text" name="description" class="form-control"
                                   id="itemDescription"
@@ -57,20 +57,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="brand" class="form-label">Бренд</label>
-                        <input value="{{$item->brand}}" type="text" class="form-control" name="brand" id="itemBrand"
+                        <label for="brand" class="form-label">Торговое наименование</label>
+                        <input autocomplete="off" value="{{$item->brand}}" type="text" class="form-control" name="brand" id="itemBrand"
+                               placeholder="Введите торговое наименование СИЗ">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Модель, артикул</label>
+                        <input autocomplete="off" value="{{$item->model}}" type="text" class="form-control" name="model" id="itemModel"
                                placeholder="Введите название СИЗ">
                     </div>
 
                     <div class="mb-3">
-                        <label for="model" class="form-label">Модель</label>
-                        <input value="{{$item->model}}" type="text" class="form-control" name="model" id="itemModel"
-                               placeholder="Введите название СИЗ">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="model" class="form-label">Пункт норм</label>
-                        <input value="{{$item->norm_clause}}" type="text" class="form-control" name="normClause"
+                        <label for="model" class="form-label">Основание выдачи СИЗ</label>
+                        <input autocomplete="off" value="{{$item->norm_clause}}" type="text" class="form-control" name="normClause"
                                id="normClause"
                                placeholder="П. 165">
                     </div>

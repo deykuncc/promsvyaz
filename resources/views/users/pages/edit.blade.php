@@ -33,11 +33,24 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="professionName" class="form-label">ФИО</label>
-                        <input autocomplete="off" type="text"
-                               value="{{$user->fullName()}}"
-                               class=" form-control" id="name"
-                        placeholder="Иванов Иван Иванович" required>
+                        <label for="lastName" class="form-label">Фамилия</label>
+                        <input autocomplete="off" value="{{$user->last_name}}" type="text" class="form-control"
+                               id="lastName"
+                               placeholder="Иванов" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Имя</label>
+                        <input autocomplete="off" value="{{$user->first_name}}" type="text" class="form-control"
+                               id="firstName"
+                               placeholder="Иван" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="middleName" class="form-label">Отчество</label>
+                        <input autocomplete="off" value="{{$user->middle_name}}" type="text" class="form-control"
+                               id="middleName"
+                               placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">

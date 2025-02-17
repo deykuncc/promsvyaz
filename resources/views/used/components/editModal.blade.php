@@ -13,11 +13,11 @@
                     <label for="untilAtDays" class="text-secondary">Дата конца срока эксплуатации</label>
                     <input autocomplete="off" autocapitalize="off" name="untilAtDays" id="untilAtDays" type="text"
                            value="" class="form-control"
-                           placeholder="78159">
+                           placeholder="25.12.2000">
                 </div>
                 <div class="col mt-3 d-flex align-items-center">
                     <label for="offUntilAt" class="text-secondary">До износа</label>
-                    <input class="ms-2" id="offUntilAt" name="offUntilAt" type="checkbox">
+                    <input autocomplete="off" class="ms-2" id="offUntilAt" name="offUntilAt" type="checkbox">
                 </div>
                 <div class="col mt-2">
                     <label for="days" class="text-secondary">Размер</label>

@@ -18,7 +18,7 @@ class DepartmentsController extends Controller
         }
 
         $departments = $departments->paginate(20);
-        $data = ['title' => 'Список участков', 'departments' => $departments];
+        $data = ['title' => 'Структурное подразделение', 'departments' => $departments];
         return view('departments.index', $data);
     }
 

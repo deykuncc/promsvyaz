@@ -20,7 +20,6 @@ class UsersService
      */
     public function store(array $data): void
     {
-        $this->formatName($data);
 
         DB::beginTransaction();
         try {
@@ -54,7 +53,6 @@ class UsersService
             unset($data['password']);
         }
 
-        $this->formatName($data);
         DB::beginTransaction();
         try {
             User::query()->where('id', $userId)->lockForUpdate()->update($data);
@@ -86,14 +84,5 @@ class UsersService
             DB::rollBack();
             throw new CannotDestroyUserException();
         }
-    }
-
-    private function formatName(array &$data): void
-    {
-        $name = explode(' ', $data['name']);
-        $data['last_name'] = $name[0];
-        $data['first_name'] = $name[1];
-        $data['middle_name'] = $name[2] ?? null;
-        unset($data['name']);
     }
 }

@@ -95,19 +95,15 @@ $(document).ready(function () {
         let untilAt = $(this).parents('tr').attr('data-until');
 
         $('#untilAtDays').val(untilAt);
-        $('#untilAtDays').datepicker(
-            {
-                dateFormat: "dd.mm.yy",
-                duration: "fast",
-                language: "ru",
-                defaultViewDate: new Date()
-            }
-        );
 
         $("#sizeType").val(typeSize);
         $('[data-target-item-name]').text(itemName);
         changeSizeType(typeSize);
         $("#sizeId").val(size);
+        console.info(untilAt);
+        if (untilAt.length <= 0) {
+            $('#offUntilAt').prop('checked', 1);
+        }
         $("#usedId").val(id);
     });
 

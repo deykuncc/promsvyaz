@@ -143,7 +143,6 @@
 <script src="{{url('assets/js/plugins/jquery-ui.js')}}"></script>
 <script src="{{url('assets/js/plugins/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
-<script src="{{url('assets/js/apps/used/utils.js')}}"></script>
 <script src="{{url('assets/js/apps/used/index.js')}}"></script>
 
 </body>

@@ -1,12 +1,18 @@
 function update() {
     let userId = $("#userId").val();
-    let name = $("#name").val();
+    let lastName = $("#lastName").val();
+    let firstName = $("#firstName").val();
+    let middleName = $("#middleName").val();
     let login = $("#login").val();
     let password = $("#password").val();
     let role = $("#role").val();
 
-    if (name.length <= 0) {
-        return showToast('Введите ФИО', 0);
+    if (lastName.length <= 0) {
+        return showToast('Введите Фамилию', 0);
+    }
+
+    if (firstName.length <= 0) {
+        return showToast('Введите Имя', 0);
     }
 
     if (login.length <= 0) {
@@ -17,7 +23,7 @@ function update() {
         return showToast('Выберите должность', 0);
     }
 
-    ajaxUpdate(userId, name, login, password, role).then((response) => {
+    ajaxUpdate(userId, lastName, firstName, middleName, login, password, role).then((response) => {
         location.href = "/users";
     }).catch((error) => {
         showToast(error.responseJSON.message, 0);
@@ -26,14 +32,16 @@ function update() {
 
 }
 
-function ajaxUpdate(userId, name, login, password, role) {
+function ajaxUpdate(userId, lastName, firstName, middleName, login, password, role) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/api/users/${userId}`,
             type: 'put',
             dataType: 'json',
             data: {
-                name: name,
+                last_name: lastName,
+                first_name: firstName,
+                middle_name: middleName,
                 login: login,
                 password: password,
                 role_id: role,

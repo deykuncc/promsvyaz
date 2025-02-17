@@ -23,12 +23,11 @@ class EmployeesService
     {
         DB::beginTransaction();
         try {
-            $name = explode(" ", $data['name']);
 
             $employee = Employee::query()->create([
-                'first_name' => $name[1],
-                'last_name' => $name[0],
-                'middle_name' => $name[2] ?? null,
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'middle_name' => $data['middle_name'] ?? null,
                 'external_id' => $data['external_id'],
                 'gender_id' => $data['gender_id'],
                 'employment_date' => Carbon::createFromFormat('d.m.Y', $data['employment_date'])->format('Y-m-d H:i:s'),
@@ -40,7 +39,7 @@ class EmployeesService
                 'profession_id' => $data['profession_id'],
             ]);
 
-            $this->storeItems($employee->id, $data['items']);
+            $this->storeItems($employee->id, $data['employment_date'], $data['items']);
             DB::commit();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -57,11 +56,6 @@ class EmployeesService
      */
     public function update(array $data, int $employeeId): void
     {
-        $fullName = explode(" ", $data['name']);
-        unset($data['name']);
-        $data['first_name'] = $fullName[1];
-        $data['last_name'] = $fullName[0];
-        $data['middle_name'] = $fullName[2];
         $data['employment_date'] = Carbon::createFromFormat('d.m.Y', $data['employment_date'])->format('Y-m-d H:i:s');
 
         DB::beginTransaction();
@@ -83,9 +77,11 @@ class EmployeesService
      */
     public function updateItems(array $data, int $employeeId): void
     {
+        $employee = Employee::query()->where('id', $employeeId)->first();
+        $employmentDate = Carbon::parse($employee->employment_date)->format('d.m.Y');
         DB::beginTransaction();
         try {
-            $this->storeItems($employeeId, $data['items'] ?? []);
+            $this->storeItems($employeeId, $employmentDate, $data['items'] ?? []);
             $this->deletedItems($employeeId, $data['deleted_items'] ?? []);
             DB::commit();
         } catch (\Exception $e) {
@@ -100,20 +96,25 @@ class EmployeesService
      * @param array $items
      * @return void
      */
-    private function storeItems(int $employeeId, array $items): void
+    private function storeItems(int $employeeId, string $employmentDateOwn, array $items): void
     {
         $data = [];
         if (!empty($items)) {
             foreach ($items as $item) {
+                $employmentDate = Carbon::createFromFormat('d.m.Y', $employmentDateOwn);
 
                 if ($item['dateType'] === 'days') {
-                    $untilAt = now()->addDays((float)$item['dateValue']);
+                    $untilAt = $employmentDate->addDays((float)$item['dateValue']);
                 } elseif ($item['dateType'] === 'months') {
-                    $untilAt = now()->addMonths((float)$item['dateValue']);
+                    $untilAt = $employmentDate->addMonths((float)$item['dateValue']);
                 } elseif ($item['dateType'] === 'years') {
-                    $untilAt = now()->addYears((float)$item['dateValue']);
+                    $untilAt = $employmentDate->addYears((float)$item['dateValue']);
                 } else {
                     $untilAt = null;
+                }
+
+                if ($untilAt != null) {
+                    $untilAt = $untilAt->format('Y-m-d H:i:s');
                 }
 
                 $data[] = [
@@ -126,6 +127,7 @@ class EmployeesService
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+
             }
             EmployeeItem::query()->insert($data);
         }

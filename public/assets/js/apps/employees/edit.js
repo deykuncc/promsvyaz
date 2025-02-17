@@ -1,6 +1,8 @@
 function update() {
     let employeeId = $("#employeeId").val();
-    let name = $("#name").val();
+    let lastName = $("#lastName").val();
+    let firstName = $("#firstName").val();
+    let middleName = $("#middleName").val();
     let externalId = $("#externalId").val();
     let gender = $("#gender").val();
     let startDate = $("#startDate").val();
@@ -11,21 +13,23 @@ function update() {
     let departmentId = $('#departmentId').val();
     let professionId = $('#professionId').val();
 
-    ajaxUpdate(employeeId, name, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId).then((response) => {
-        location.reload();
+    ajaxUpdate(employeeId, lastName, firstName, middleName, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId).then((response) => {
+        // location.reload();
     }).catch((error) => {
         showToast(error.responseJSON.message, 0);
     })
 }
 
-function ajaxUpdate(employeeId, name, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId) {
+function ajaxUpdate(employeeId, lastName, firstName, middleName, externalId, gender, startDate, height, sizeClothes, sizeShoes, sizeHats, departmentId, professionId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/api/employees/${employeeId}`,
             type: 'put',
             dataType: 'json',
             data: {
-                name: name,
+                last_name: lastName,
+                first_name: firstName,
+                middle_name: middleName,
                 external_id: externalId,
                 gender_id: gender,
                 employment_date: startDate,

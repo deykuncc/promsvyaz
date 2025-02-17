@@ -64,6 +64,7 @@ class EmployeesController extends Controller
     public function edit(int $employeeId)
     {
         $employee = Employee::query()->with(['department', 'gender', 'profession', 'items'])->where('id', $employeeId)->first();
+
         $data = [
             'title' => "Личная карточка {$employeeId}",
             'employee' => $employee,

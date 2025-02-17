@@ -70,7 +70,7 @@
             <div class="title__header">
                 <div class="title__header__content">
                     <div class="title__header__main__text">
-                        <div>Список персонала панели управления</div>
+                        <div>Настройки</div>
                     </div>
                 </div>
 

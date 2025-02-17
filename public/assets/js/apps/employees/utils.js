@@ -19,6 +19,36 @@ function constructItems(items) {
     }
 
     $("#itemsProfession").html(html);
+
+    setTimeout(() => {
+        setSelectors();
+    }, 100);
+}
+
+function setSelectors() {
+    $('[data-set-after-type-size]').each(function (index) {
+        let sizeId = 0;
+        let sizeType = $(this).attr('data-set-after-type-size');
+        if (sizeType === 'clothesAddon') {
+            sizeId = $('#sizeClothes').val();
+        } else if (sizeType == 'shoesAddon') {
+            sizeId = $("#sizeShoes").val();
+        } else if (sizeType == 'hatsAddon') {
+            sizeId = $("#sizeHats").val();
+        }
+
+        if ($(this).attr('data-condition-type') !== undefined) {
+            $(this).find('select[data-condition-type]').val($(this).attr('data-condition-type')).change();
+        }
+
+        $(this).find('select[data-id="sizeAddon"]').val($(this).attr('data-set-after-type-size')).change();
+
+        if (sizeId != 0) {
+            console.info(sizeId);
+            $(this).find('select[data-size-addon-item]').val(sizeId).change();
+            console.info('setsize: ', $(this).find('select[data-size-addon-item]').val());
+        }
+    });
 }
 
 function ajaxGetItemsByProfession(professionId) {
@@ -55,7 +85,34 @@ function addItem() {
     ajaxGetItems().then((response) => {
         for (let i in response.items) {
             let item = response.items[i];
-            itemsHtml += `<option value="${item.id}" >${item.name}</option>`;
+            let category = item.category.name_eng;
+
+            let conditionType = 0;
+            let typeSize = "";
+            if (['clothes', 'others', 'hats'].includes(category)) {
+                conditionType = 1;
+            } else if (['hands', 'shoes'].includes(category)) {
+                conditionType = 2;
+            } else if (['clear'].includes(category)) {
+                conditionType = 3;
+            }
+
+            if (category == 'clothes') {
+                typeSize = 'clothesAddon';
+            } else if (['others', 'hands', 'clear'].includes(category)) {
+                typeSize = 'withoutSizeAddon';
+            } else if (category == 'hats') {
+                typeSize = 'hatsAddon';
+            } else if (category == 'shoes') {
+                typeSize = 'shoesAddon';
+            }
+
+
+            itemsHtml += `<option
+                data-condition-value="1"
+                data-condition-type="${conditionType}"
+                data-set-after-type-size="${typeSize}"
+                value="${item.id}" >${item.name}</option>`;
         }
 
         let html =
@@ -69,7 +126,7 @@ function addItem() {
             </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                    <input data-condition-value value="0" style="width: 60px" class="form-control">
+                    <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
                         <select data-condition-type style="width: 85px" class="form-select">
                             <option selected>Выберите</option>
                             <option value="1">Шт</option>
@@ -81,12 +138,9 @@ function addItem() {
             </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                    <input value="0" data-date-value style="width: 60px" class="form-control">
+                    <input autocomplete="off" data-date-value style="width: 60px" class="form-control">
                         <select data-date-type style="width: 125px" class="form-select">
-                            <option selected>Выберите</option>
-                            <option value="days">В днях</option>
-                            <option value="months">В месяцах</option>
-                            <option value="years">В годах</option>
+                            <option selected value="months">В месяцах</option>
                             <option value="unlimited">До износа</option>
                         </select>
                 </div>
@@ -132,33 +186,55 @@ function addItem() {
 
 
 function addItemOfProfession(item) {
+    let category = item.item.category.name_eng;
+    let conditionType = 0;
+    let typeSize = "";
+    if (['clothes', 'others', 'hats'].includes(category)) {
+        conditionType = 1;
+    } else if (['hands', 'shoes'].includes(category)) {
+        conditionType = 2;
+    } else if (['clear'].includes(category)) {
+        conditionType = 3;
+    }
+
+    if (category == 'clothes') {
+        typeSize = 'clothesAddon';
+    } else if (['others', 'hands', 'clear'].includes(category)) {
+        typeSize = 'withoutSizeAddon';
+    } else if (category == 'hats') {
+        typeSize = 'hatsAddon';
+    } else if (category == 'shoes') {
+        typeSize = 'shoesAddon';
+    }
+
+
     let html =
         `
         <tr
         data-item-name="${item.item.name}"
         data-item-id="${item.item.id}"
+        data-condition-type="${conditionType}"
+        data-condition-value="1"
+        data-set-after-type-size="${typeSize}"
         >
             <td>${item.item.name}</td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                   <input data-condition-value value="0" style="width: 60px" class="form-control">
+                   <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
                     <select data-condition-type style="width: 85px" class="form-select">
-                        <option selected>Выберите</option>
-                        <option value="1">Шт</option>
-                        <option value="2">Пар</option>
-                        <option value="3">Мл</option>
+                        <option>Выберите</option>
+                        <option ${['clothes', 'others', 'hats'].includes(category) ? 'selected' : ''} value="1">Шт</option>
+                        <option ${['hands', 'shoes'].includes(category) ? 'selected' : ''} value="2">Пар</option>
+                        <option ${['clear'].includes(category) ? 'selected' : ''} value="3">Мл</option>
                         <option value="4">Гр</option>
                     </select>
                 </div>
             </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                    <input value="0" data-date-value style="width: 60px" class="form-control">
+                    <input autocomplete="off" data-date-value style="width: 60px" class="form-control">
                     <select data-date-type style="width: 125px" class="form-select">
-                            <option selected>Выберите</option>
-                            <option value="days">В днях</option>
-                            <option value="months">В месяцах</option>
-                            <option value="years">В годах</option>
+                            <option selected value="months">В месяцах</option>
                             <option value="unlimited">До износа</option>
                     </select>
                 </div>
@@ -263,10 +339,14 @@ $(document).ready(function () {
     });
 
     $("body").on('change', 'select[data-item-select]', function () {
+        let option = $(this).find("option:selected");
         let itemId = $(this).val();
-        let itemName = $(this).find("option:selected").text();
+        let itemName = option.text();
         $(this).parents('tr').attr('data-item-id', itemId);
         $(this).parents('tr').attr('data-item-name', itemName);
+        $(this).parents('tr').attr('data-condition-type', option.attr('data-condition-type'));
+        $(this).parents('tr').attr('data-set-after-type-size', option.attr('data-set-after-type-size'));
+        setSelectors();
     });
 
     $('body').on('change', 'select[data-condition-type]', function () {
