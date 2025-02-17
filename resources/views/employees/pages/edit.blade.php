@@ -35,9 +35,9 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label  class="form-label">Фамилия</label>
-                        <input name="dfhgdfshd" type="text" style="display:none" autocomplete="off">
+                        <input type="text" style="display:none" autocomplete="off">
                         <input autocomplete="off" value="{{$employee->last_name}}" type="text" class="form-control"
-                               id="lastNames"
+                               id="lastName"
                                placeholder="Иванов" required>
                     </div>
 
