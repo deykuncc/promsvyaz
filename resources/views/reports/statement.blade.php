@@ -42,8 +42,8 @@
                 <tr>
                     @if ($key == 0)
                         <td rowspan="{{ count($row->items) }}">{{ $index + 1 }}</td>
-                        <td rowspan="{{ count($row->items) }}">{{ $row->department->name }}</td>
-                        <td rowspan="{{ count($row->items) }}">{{ $row->profession->name ?? null }}</td>
+                        <td rowspan="{{ count($row->items) }}">{{ $row->department->name ?? 'Не указан' }}</td>
+                        <td rowspan="{{ count($row->items) }}">{{ $row->profession->name ?? 'Не указан' }}</td>
                         <td rowspan="{{ count($row->items) }}">{{ $row->name() }}</td>
                     @endif
                     <td>{{ $item->item->name }}</td>
