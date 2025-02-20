@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
             'department_id' => ['required', Rule::exists('departments', 'id')->whereNull('deleted_at')],
 
             'items' => ['required', 'array', 'min:1'],
-            'items.*.id' => ['required', Rule::exists('items', 'id')->whereNull('deleted_at')],
+            'items.*.id' => ['required', Rule::exists('items', 'id')],
             'items.*.size' => ['required'],
             'items.*.dateType' => ['required', 'in:days,months,years,unlimited'],
             'items.*.dateValue' => ['nullable'],
