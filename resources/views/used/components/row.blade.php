@@ -5,9 +5,9 @@
     data-until="{{$item->untilAtOrig() !=null ? \Carbon\Carbon::parse($item->until_at)->format('d.m.Y') : null}}"
     data-size="{{$item->size ? $item->size->id : "Без размера"}}">
     <th>{{$item->id}}</th>
-    <td><a href="#" class="text-decoration-none">{{$item->employee->department->name}}</a></td>
-    <td><a href="#" class="text-decoration-none">{{$item->employee->name()}}</a></td>
-    <td><a href="#" class="text-decoration-none">{{$item->item->name ?? null}}</a></td>
+    <td><a target="_blank" href=" {{$item->employee->department != null ? route('departments.edit',['department'=>$item->employee->department->id]) : "#" }}" class="text-decoration-none">{{$item->employee->department->name ?? 'Не указан'}}</a></td>
+    <td><a target="_blank" href="{{route('employees.edit', ['employee' => $item->employee->id])}}" class="text-decoration-none">{{$item->employee->name()}}</a></td>
+    <td><a target="_blank" href="{{route('items.edit',['item'=>$item->item->id])}}" class="text-decoration-none">{{$item->item->name ?? null}}</a></td>
     <td title="{{$item->until_at}}">{{ "{$item->untilAtOrig()}" ? "{$item->format_until_at} дней" : "До износа" }}</td>
     <td>
         <div class="form-check d-flex">

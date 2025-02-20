@@ -140,7 +140,7 @@
                     <div class="flex-col">
                         <div class="col-name">Структурное <br/>подразделение</div>
                         <div class="enter-data">
-                            <span>{{$employee->department->name}}</span>
+                            <span>{{$employee->department->name ?? null}}</span>
                         </div>
                     </div>
                 </li>
@@ -148,7 +148,7 @@
                     <div class="flex-col">
                         <div class="col-name">Профессия<br/>(должность)</div>
                         <div class="enter-data">
-                            <span>{{$employee->profession->name}}</span>
+                            <span>{{$employee->profession->name ?? null}}</span>
                         </div>
                     </div>
                 </li>
