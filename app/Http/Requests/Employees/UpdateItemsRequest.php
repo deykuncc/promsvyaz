@@ -18,7 +18,7 @@ class UpdateItemsRequest extends FormRequest
     {
         return [
             'items' => ['nullable', 'array'],
-            'items.*.id' => ['required', Rule::exists('items', 'id')->whereNull('deleted_at')],
+            'items.*.id' => ['required', Rule::exists('items', 'id')],
             'items.*.size' => ['required'],
             'items.*.dateType' => ['required', 'in:days,months,years,unlimited'],
             'items.*.dateValue' => ['nullable'],
