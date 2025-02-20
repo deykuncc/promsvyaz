@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'items';
-    protected $fillable = ['category_id', 'name', 'description', 'brand', 'model', 'norm_clause', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['category_id', 'name', 'description', 'brand', 'model', 'norm_clause', 'created_at', 'updated_at'];
     public $timestamps = true;
 
     public function category(): BelongsTo
