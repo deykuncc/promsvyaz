@@ -74,8 +74,6 @@ class EmployeesController extends Controller
             'items' => $employee->items()->where('is_active', '=', 1)->get(),
         ];
 
-        dd($employee->items()->where('is_active', '=', true)->get());
-
         return view('employees.pages.edit', array_merge($data, $this->getSizes()));
     }
 
