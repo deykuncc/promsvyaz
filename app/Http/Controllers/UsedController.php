@@ -60,7 +60,7 @@ class UsedController extends Controller
         $items->setCollection(
             $items->getCollection()->transform(function ($item) {
                 if ($item->expiry_date) {
-                    $item->format_until_at = $item->expiry_date != null ? floor(Carbon::now()->diffInDays($item->expiry_date)) : "До износа";
+                    $item->format_until_at = $item->expiry_date != null ? floor(Carbon::now()->diffInDays($item->expiry_date)) . " Дней" : "До износа";
                 } else {
                     $item->format_until_at = $item->usage_months ? "Поставьте дату получения" : 'До износа';
 
