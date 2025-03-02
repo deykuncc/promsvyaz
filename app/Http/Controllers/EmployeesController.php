@@ -71,8 +71,10 @@ class EmployeesController extends Controller
             'departments' => $this->departments,
             'genders' => $this->genders,
             'professions' => $this->professions,
-            'items' => $employee->items()->where('is_active', '=', true),
+            'items' => $employee->items()->where('is_active', '=', 1)->get(),
         ];
+
+        dd($employee->items()->where('is_active', '=', true)->get());
 
         return view('employees.pages.edit', array_merge($data, $this->getSizes()));
     }

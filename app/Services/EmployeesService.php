@@ -125,7 +125,6 @@ class EmployeesService
                         'quantity_type' => $item['conditionType'] ?? null,
                         'is_active' => true,
                     ];
-dd($employeeItems);
                 }
             }
 
