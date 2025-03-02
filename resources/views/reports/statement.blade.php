@@ -48,7 +48,7 @@
                     @endif
                     <td>{{ $item->item->name }}</td>
                     <td>{{ $item->size->size ?? null }}</td>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$item->created_at)->format('d.m.Y') }}</td>
+                    <td>{{ $item->issued_date != null ?  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$item->issued_date)->format('d.m.Y') : null }}</td>
                     <td></td>
                 </tr>
             @endforeach
