@@ -78,7 +78,8 @@
 
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input value="{{$employee->employment_date}}" class="form-control"
+                        <input value="{{\Carbon\Carbon::parse($employee->employment_date)->format('d.m.Y')}}"
+                               class="form-control"
                                autocomplete="off" placeholder="25.12.2000" type="text"
                                id="startDate">
                     </div>
