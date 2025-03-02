@@ -32,5 +32,6 @@ $(document).ready(function () {
     $('button[data-action="destroy"]').on('click', function () {
         let employeeId = $("#employeeId").val();
         destroy(employeeId);
+        $(`[data-employee-id="${employeeId}"]`).remove();
     });
 });

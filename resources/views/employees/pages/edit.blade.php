@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label  class="form-label">Фамилия</label>
+                        <label class="form-label">Фамилия</label>
                         <input type="text" style="display:none" autocomplete="off">
                         <input autocomplete="off" value="{{$employee->last_name}}" type="text" class="form-control"
                                id="lastName"
@@ -60,7 +60,8 @@
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Табельный номер</label>
                         <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" type="number" value="{{$employee->external_id}}" class="form-control" id="externalId"
+                        <input autocomplete="off" type="number" value="{{$employee->external_id}}" class="form-control"
+                               id="externalId"
                                placeholder="Табельный номер" required>
                     </div>
 
@@ -154,6 +155,11 @@
                         <a href="{{route('reports.employee', ['employee' => $employee->id, 'category'=> 'clothes'])}}"
                            type="submit"
                            class="ms-3 btn btn-secondary">Распечатать одежду СИЗ</a>
+                        <a href="{{route('reports.employee-back', ['employee' => $employee->id])}}"
+                           type="submit"
+                           class="ms-3 btn btn-secondary">Распечатать оборотную сторону</a>
+                    </div>
+                    <div class="" style="display:flex; flex-direction: row; justify-content: center; margin-top: 18px;">
                         <button type="submit" action="saveProfile" class="ms-3 btn btn-primary">Сохранить изменения
                         </button>
                     </div>

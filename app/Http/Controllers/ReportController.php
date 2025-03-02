@@ -15,6 +15,7 @@ class ReportController extends Controller
     {
         $data = ['title' => "Личная карточка {$employee->id}"];
         $employeeItems = EmployeeItem::query()
+            ->where('is_active', true)
             ->with(['employee', 'item'])
             ->where('employee_id', '=', $employee->id);
 
@@ -51,12 +52,13 @@ class ReportController extends Controller
                 DB::raw("SUM(employee_items.quantity) as count"),
                 'departments.name as department',
             )
+            ->where('is_active', true)
             ->where('employee_items.deleted_at', null)
             ->when(($untilAt = $request->input('until_at', 31)), function ($q) use ($untilAt) {
                 $untilAt = now()->addDays((int)$untilAt)->endOfDay();
-                $q->where('employee_items.until_at', '<', $untilAt);
+                $q->where('employee_items.expiry_date', '<', $untilAt);
             })
-            ->where('employee_items.until_at', '!=', null)
+            ->where('employee_items.expiry_date', '!=', null)
             ->join('items', 'items.id', '=', 'employee_items.item_id')
             ->join('sizes', 'employee_items.size_id', '=', 'sizes.id')
             ->join('employees', 'employees.id', '=', 'employee_items.employee_id')
@@ -101,6 +103,7 @@ class ReportController extends Controller
         $items = Employee::query()
             ->with(['items' => function ($query) {
                 $query->where('received', true)
+                    ->where('is_active', true)
                     ->with(['item', 'size']);
             }, 'department', 'profession'])
             ->orderBy('department_id')
@@ -108,5 +111,16 @@ class ReportController extends Controller
 
         $data += ['rows' => $items];
         return view('reports.statement', $data);
+    }
+
+    public function employeeBack(int $employeeId)
+    {
+        $items = EmployeeItem::query()
+            ->with('item')
+            ->where('employee_id', $employeeId)
+            ->get();
+
+        $data = ['title' => 'Оборотная сторона личной карточки', 'items' => $items];
+        return view('reports.employee-back', $data);
     }
 }

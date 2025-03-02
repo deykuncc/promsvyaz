@@ -18,7 +18,10 @@ return new class extends Migration {
             $table->float('quantity');
             $table->unsignedTinyInteger('quantity_type');
             $table->boolean('received')->default(false);
-            $table->timestamp('until_at')->nullable()->default(null);
+            $table->boolean('is_active')->default(false);
+            $table->unsignedBigInteger('usage_months')->nullable()->default(null);
+            $table->timestamp('issued_date')->nullable()->default(null);
+            $table->timestamp('expiry_date')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
 

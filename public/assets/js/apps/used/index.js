@@ -14,14 +14,16 @@ function receivedChange(id) {
 
 function update() {
     let id = $("#usedId").val();
-    let untilAt = $("#untilAtDays").val();
+    let issuedDate = $("#issuedDate").val();
     let sizeId = $("#sizeId").val();
-    let isUnlimited = $("#offUntilAt").prop('checked') ? 1 : 0;
+    let isUnlimited = $("#offExpiryDate").prop('checked') ? 1 : 0;
+    let usageMonths = $("#usageMonths").val();
 
     let data = {
-        until_at: untilAt,
+        issued_date: issuedDate,
         size_id: sizeId,
         is_unlimited: isUnlimited,
+        usage_months: usageMonths,
     };
 
     ajaxUpdate(id, data).then((response) => {
@@ -92,17 +94,22 @@ $(document).ready(function () {
         let itemName = $(this).parents('tr').attr('data-item-name');
         let typeSize = $(this).parents('tr').attr('data-type-size');
         let size = $(this).parents('tr').attr('data-size');
-        let untilAt = $(this).parents('tr').attr('data-until');
+        let issuedDate = $(this).parents('tr').attr('data-issued-date');
+        let usageMonths = parseInt($(this).parents('tr').attr('data-usage-months') ?? 0);
+        if (isNaN(usageMonths)){
+            usageMonths = 0;
+        }
 
-        $('#untilAtDays').val(untilAt);
+        $("#usageMonths").val(usageMonths);
+        $('#issuedDate').val(issuedDate);
 
         $("#sizeType").val(typeSize);
         $('[data-target-item-name]').text(itemName);
         changeSizeType(typeSize);
         $("#sizeId").val(size);
-        console.info(untilAt);
-        if (untilAt.length <= 0) {
-            $('#offUntilAt').prop('checked', 1);
+
+        if (usageMonths <= 0) {
+            $('#offExpiryDate').prop('checked', 1);
         }
         $("#usedId").val(id);
     });

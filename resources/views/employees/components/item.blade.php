@@ -3,8 +3,21 @@
     <td>
         {{ "{$item->quantity} {$item->quantity_type}" }}
     </td>
+    @php
+        $expiryDate = $item->expiry_date;
+        if ($expiryDate == null && !$item->usage_months){
+            $expiryDate = "До износа";
+        }else if($expiryDate == null && $item->usage_months && !$item->issued_date){
+            $expiryDate = "Поставьте дату получения";
+        }else if($expiryDate != null && $item->usage_months){
+            $expiryDate = "{$item->usage_months} Месяцев";
+        }else{
+            $expiryDate = "Поставьте дату получения";
+        }
+    @endphp
+
     <td>
-        {{$item->until_at}}
+        {{$expiryDate}}
     </td>
     <td>
         {{$item->size == null ? 'Без размера' : $item->size->size}}

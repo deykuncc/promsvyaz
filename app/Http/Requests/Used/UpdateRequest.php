@@ -14,9 +14,19 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'until_at' => ['nullable', 'date'],
             'is_unlimited' => ['nullable', 'boolean'],
             'size_id' => ['nullable'],
+            'usage_months' => ['nullable', 'integer', 'max: 120'],
+            'issued_date' => ['required', 'date', 'date_format:d.m.Y'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'issued_date.required' => 'Заполните дату получения',
+            'issued_date.date' => 'Заполните дату получения',
+            'issued_date.date_format'=>'Дата получения должна быть в формате День.Месяц.Год',
         ];
     }
 }

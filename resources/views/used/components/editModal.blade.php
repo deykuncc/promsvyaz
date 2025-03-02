@@ -10,14 +10,20 @@
             <div class="modal-body">
                 Заполните новые данные для&nbsp;<span class="text-primary" data-target-item-name></span>
                 <div class="col mt-3">
-                    <label for="untilAtDays" class="text-secondary">Дата конца срока эксплуатации</label>
-                    <input autocomplete="off" autocapitalize="off" name="untilAtDays" id="untilAtDays" type="text"
+                    <label for="untilAtDays" class="text-secondary">Дата получения</label>
+                    <input autocomplete="off" autocapitalize="off" id="issuedDate" type="text"
+                           value="" class="form-control"
+                           placeholder="25.12.2000">
+                </div>
+                <div class="col mt-3">
+                    <label for="untilAtDays" class="text-secondary">Срок эксплуатации</label>
+                    <input autocomplete="off" autocapitalize="off" id="usageMonths" type="text"
                            value="" class="form-control"
                            placeholder="25.12.2000">
                 </div>
                 <div class="col mt-3 d-flex align-items-center">
                     <label for="offUntilAt" class="text-secondary">До износа</label>
-                    <input autocomplete="off" class="ms-2" id="offUntilAt" name="offUntilAt" type="checkbox">
+                    <input autocomplete="off" class="ms-2" id="offExpiryDate" type="checkbox">
                 </div>
                 <div class="col mt-2">
                     <label for="days" class="text-secondary">Размер</label>

@@ -2,13 +2,18 @@
     data-id="{{$item->id}}"
     data-item-name="{{$item->item->name ?? null}}"
     data-type-size="{{$item->size?->typeOrig() ?? 'nosize'}}"
-    data-until="{{$item->untilAtOrig() !=null ? \Carbon\Carbon::parse($item->until_at)->format('d.m.Y') : null}}"
+    data-issued-date="{{$item->issued_date ? \Carbon\Carbon::parse($item->issued_date)->format('d.m.Y') : null}}"
+    data-usage-months="{{$item->usage_months}}"
     data-size="{{$item->size ? $item->size->id : "Без размера"}}">
     <th>{{$item->id}}</th>
-    <td><a target="_blank" href=" {{$item->employee->department != null ? route('departments.edit',['department'=>$item->employee->department->id]) : "#" }}" class="text-decoration-none">{{$item->employee->department->name ?? 'Не указан'}}</a></td>
-    <td><a target="_blank" href="{{route('employees.edit', ['employee' => $item->employee->id])}}" class="text-decoration-none">{{$item->employee->name()}}</a></td>
-    <td><a target="_blank" href="{{route('items.edit',['item'=>$item->item->id])}}" class="text-decoration-none">{{$item->item->name ?? null}}</a></td>
-    <td title="{{$item->until_at}}">{{ "{$item->untilAtOrig()}" ? "{$item->format_until_at} дней" : "До износа" }}</td>
+    <td><a target="_blank"
+           href=" {{$item->employee->department != null ? route('departments.edit',['department'=>$item->employee->department->id]) : "#" }}"
+           class="text-decoration-none">{{$item->employee->department->name ?? 'Не указан'}}</a></td>
+    <td><a target="_blank" href="{{route('employees.edit', ['employee' => $item->employee->id])}}"
+           class="text-decoration-none">{{$item->employee->name()}}</a></td>
+    <td><a target="_blank" href="{{route('items.edit',['item'=>$item->item->id])}}"
+           class="text-decoration-none">{{$item->item->name ?? null}}</a></td>
+    <td title="">{{$item->format_until_at}}</td>
     <td>
         <div class="form-check d-flex">
             <input autocomplete="off" data-received class="form-check-input" {{$item->received ? 'checked' : ''}} type="checkbox" value="">

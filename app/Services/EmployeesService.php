@@ -23,28 +23,13 @@ class EmployeesService
     {
         DB::beginTransaction();
         try {
-
-            $employee = Employee::query()->create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'middle_name' => $data['middle_name'] ?? null,
-                'external_id' => $data['external_id'],
-                'gender_id' => $data['gender_id'],
-                'employment_date' => Carbon::createFromFormat('d.m.Y', $data['employment_date'])->format('Y-m-d H:i:s'),
-                'height' => $data['height'],
-                'clothes_size_id' => $data['size_clothes'],
-                'shoes_size_id' => $data['size_shoes'],
-                'hats_size_id' => $data['size_hats'],
-                'department_id' => $data['department_id'],
-                'profession_id' => $data['profession_id'],
-            ]);
-
-            $this->storeItems($employee->id, $data['employment_date'], $data['items']);
+            $employee = $this->createEmployee($data);
+            $this->storeItems($employee, $data['items'] ?? []);
             DB::commit();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             DB::rollBack();
-            throw new CannotStoreEmployeeException();
+            Log::error($e->getMessage());
+            throw new \Exception("Произошла непредвиденная ошибка");
         }
     }
 
@@ -78,10 +63,9 @@ class EmployeesService
     public function updateItems(array $data, int $employeeId): void
     {
         $employee = Employee::query()->where('id', $employeeId)->first();
-        $employmentDate = Carbon::parse($employee->employment_date)->format('d.m.Y');
         DB::beginTransaction();
         try {
-            $this->storeItems($employeeId, $employmentDate, $data['items'] ?? []);
+            $this->storeItemsManual($employee, $data['items'] ?? []);
             $this->deletedItems($employeeId, $data['deleted_items'] ?? []);
             DB::commit();
         } catch (\Exception $e) {
@@ -93,58 +77,156 @@ class EmployeesService
 
     /**
      * @param int $employeeId
-     * @param array $items
-     * @return void
-     */
-    private function storeItems(int $employeeId, string $employmentDateOwn, array $items): void
-    {
-        $data = [];
-        if (!empty($items)) {
-            foreach ($items as $item) {
-                $employmentDate = Carbon::createFromFormat('d.m.Y', $employmentDateOwn);
-
-                if ($item['dateType'] === 'days') {
-                    $untilAt = $employmentDate->addDays((float)$item['dateValue']);
-                } elseif ($item['dateType'] === 'months') {
-                    $untilAt = $employmentDate->addMonths((float)$item['dateValue']);
-                } elseif ($item['dateType'] === 'years') {
-                    $untilAt = $employmentDate->addYears((float)$item['dateValue']);
-                } else {
-                    $untilAt = null;
-                }
-
-                if ($untilAt != null) {
-                    $untilAt = $untilAt->format('Y-m-d H:i:s');
-                }
-
-                $data[] = [
-                    'employee_id' => $employeeId,
-                    'item_id' => $item['id'],
-                    'size_id' => $item['size'] === 'without' ? null : $item['size'],
-                    'quantity' => $item['conditionValue'],
-                    'quantity_type' => $item['conditionType'] ?? null,
-                    'until_at' => $untilAt,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-
-            }
-            EmployeeItem::query()->insert($data);
-        }
-    }
-
-    /**
-     * @param int $employeeId
      * @param array $data
      * @return void
      */
     private function deletedItems(int $employeeId, array $data): void
     {
-        if (!empty($data) && is_array($data)) {
+        if (!empty($data)) {
             EmployeeItem::query()
                 ->where('employee_id', '=', $employeeId)
                 ->whereIn('item_id', $data)
                 ->delete();
         }
     }
+
+    public function storeItemsManual(Employee $employee, array $items): void
+    {
+        if (!empty($items)) {
+            $employeeItems = [];
+
+            foreach ($items as $item) {
+                if ($item['dateType'] == 'unlimited') {
+                    $employeeItems[] = [
+                        'employee_id' => $employee->id,
+                        'item_id' => $item['id'],
+                        'size_id' => $item['size'] === 'without' ? null : $item['size'],
+                        'issued_date' => $employee->employment_date,
+                        'expiry_date' => null,
+                        'usage_months' => null,
+                        'quantity' => $item['conditionValue'],
+                        'quantity_type' => $item['conditionType'] ?? null,
+                        'is_active' => true,
+                    ];
+                } else {
+                    $usagePeriod = (int)$item['dateValue'];
+
+                    $dateHired = now();
+
+                    $expiryDate = (clone $dateHired)->addMonths($usagePeriod);
+                    $employeeItems[] = [
+                        'employee_id' => $employee->id,
+                        'item_id' => $item['id'],
+                        'size_id' => $item['size'] === 'without' ? null : $item['size'],
+                        'issued_date' => (clone $dateHired),
+                        'expiry_date' => $expiryDate,
+                        'usage_months' => $usagePeriod,
+                        'quantity' => $item['conditionValue'],
+                        'quantity_type' => $item['conditionType'] ?? null,
+                        'is_active' => true,
+                    ];
+dd($employeeItems);
+                }
+            }
+
+            EmployeeItem::query()->insert($employeeItems);
+        }
+    }
+
+    /**
+     * @param int $employeeId
+     * @param array $items
+     * @return void
+     */
+    private function storeItems(Employee $employee, array $items): void
+    {
+        if (!empty($items) && is_array($items)) {
+            $employeeItems = [];
+
+            foreach ($items as $item) {
+                if ($item['dateType'] == 'unlimited') {
+                    $employeeItems[] = [
+                        'employee_id' => $employee->id,
+                        'item_id' => $item['id'],
+                        'size_id' => $item['size'] === 'without' ? null : $item['size'],
+                        'issued_date' => $employee->employment_date,
+                        'expiry_date' => null,
+                        'usage_months' => null,
+                        'quantity' => $item['conditionValue'],
+                        'quantity_type' => $item['conditionType'] ?? null,
+                        'is_active' => true,
+                    ];
+                } else {
+                    $usagePeriod = (int)$item['dateValue'];
+
+                    $dateHired = Carbon::parse($employee->employment_date);
+                    $currentDate = Carbon::now();
+
+                    $diffInMonths = $dateHired->diffInMonths($currentDate);
+
+                    $issueCount = ($diffInMonths < $usagePeriod) ? 1 : ((int)floor($diffInMonths / $usagePeriod));
+
+                    for ($i = 0; $i < $issueCount; $i++) {
+                        $issuedDate = (clone $dateHired)->addMonths($usagePeriod * $i);
+                        $expiryDate = (clone $issuedDate)->addMonths($usagePeriod);
+
+                        $employeeItems[] = [
+                            'employee_id' => $employee->id,
+                            'item_id' => $item['id'],
+                            'size_id' => $item['size'] === 'without' ? null : $item['size'],
+                            'issued_date' => ($i === $issueCount - 1) ? null : $issuedDate,
+                            'expiry_date' => ($i === $issueCount - 1) ? null : $expiryDate,
+                            'usage_months' => $usagePeriod,
+                            'quantity' => $item['conditionValue'],
+                            'quantity_type' => $item['conditionType'] ?? null,
+                            'is_active' => ($i === $issueCount - 1) ? true : false,
+                        ];
+                    }
+                }
+            }
+
+            EmployeeItem::query()->insert($employeeItems);
+        }
+    }
+
+    /**
+     * @param int $employeeId
+     * @return void
+     * @throws \Exception
+     */
+    public function delete(int $employeeId): void
+    {
+        DB::beginTransaction();
+        try {
+            Employee::query()->where('id', $employeeId)->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw new \Exception("Произошла непредвиденная ошибка");
+        }
+    }
+
+    /**
+     * @param array $data
+     * @return Employee
+     */
+    public function createEmployee(array $data): Employee
+    {
+        return Employee::query()->create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'middle_name' => $data['middle_name'] ?? null,
+            'external_id' => $data['external_id'],
+            'gender_id' => $data['gender_id'],
+            'employment_date' => Carbon::createFromFormat('d.m.Y', $data['employment_date'])->format('Y-m-d H:i:s'),
+            'height' => $data['height'],
+            'clothes_size_id' => $data['size_clothes'],
+            'shoes_size_id' => $data['size_shoes'],
+            'hats_size_id' => $data['size_hats'],
+            'department_id' => $data['department_id'],
+            'profession_id' => $data['profession_id'],
+        ]);
+    }
+
 }

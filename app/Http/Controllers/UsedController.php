@@ -14,7 +14,10 @@ class UsedController extends Controller
     public function index(Request $request)
     {
         $items = EmployeeItem::query()
+            ->whereHas('employee')
+            ->where('is_active', true)
             ->with(['employee', 'item'])
+            ->orderby('issued_date')
             ->orderByDesc('id');
 
         if (($nameItem = $request->input('nameItem'))) {
@@ -26,8 +29,8 @@ class UsedController extends Controller
         if (($days = $request->input('days'))) {
             $untilAt = now()->addDays((int)$days)->endOfDay();
             $items
-                ->where('until_at', '<', $untilAt)
-                ->where('until_at', '!=', null);
+                ->where('expiry_date', '<', $untilAt)
+                ->where('expiry_date', '!=', null);
         }
 
         if (($received = $request->input('received'))) {
@@ -56,8 +59,11 @@ class UsedController extends Controller
 
         $items->setCollection(
             $items->getCollection()->transform(function ($item) {
-                if ($item->until_at) {
-                    $item->format_until_at = $item->untilAtOrig() != null ? floor(Carbon::now()->diffInDays($item->until_at)) : "До износа";
+                if ($item->expiry_date) {
+                    $item->format_until_at = $item->expiry_date != null ? floor(Carbon::now()->diffInDays($item->expiry_date)) : "До износа";
+                } else {
+                    $item->format_until_at = $item->usage_months ? "Поставьте дату получения" : 'До износа';
+
                 }
                 return $item;
             })
@@ -76,6 +82,8 @@ class UsedController extends Controller
             'departments' => $departments,
             'items' => $items,
             'categories' => $categories];
+
+
         return view('used.index', $data);
     }
 }

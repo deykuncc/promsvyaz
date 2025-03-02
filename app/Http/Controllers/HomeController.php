@@ -15,7 +15,7 @@ class HomeController extends Controller
         $employeesCount = Employee::all()->count();
         $employeesItemsCount = EmployeeItem::all()->count();
         $employeesItemsExpiredCount = EmployeeItem::query()
-            ->where('until_at', '<', now())
+            ->where('expiry_date', '<', now())
             ->count();
         $data = [
             'title' => "Главная страница",

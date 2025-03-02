@@ -15,7 +15,7 @@ class EmployeeItem extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'employee_items';
-    protected $fillable = ['employee_id', 'item_id', 'size_id', 'quantity', 'quantity_type', 'received', 'until_at', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['employee_id', 'item_id', 'size_id', 'quantity', 'quantity_type', 'received', 'expiry_date', 'usage_months', 'is_active', 'issued_date', 'created_at', 'updated_at', 'deleted_at'];
     public $timestamps = true;
 
     public function employee(): BelongsTo
@@ -36,13 +36,13 @@ class EmployeeItem extends Model
     public function untilAt(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value != null ? Carbon::createFromFormat('Y-m-d H:i:s',$value)->format('d.m.Y') : "До износа",
+            get: fn($value) => $value != null ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d.m.Y') : "До износа",
         );
     }
 
     public function untilAtOrig(): ?string
     {
-        return $this->attributes['until_at'] ?? null;
+        return $this->attributes['expiry_date'] ?? null;
     }
 
     public function quantityType(): Attribute

@@ -37,12 +37,15 @@ class UsedController extends Controller
         $data = $request->validated();
 
         if ($data['is_unlimited']) {
-            $data['until_at'] = null;
-        }else{
-            $data['until_at'] = Carbon::createFromFormat('d.m.Y', $data['until_at'])->format('Y-m-d H:i:s');
+            $data['expiry_date'] = null;
+            $data['usage_months'] = 0;
+        } else {
+            $issuedDate = Carbon::createFromFormat('d.m.Y', $data['issued_date']);
+            $expiryDate = (clone $issuedDate)->addMonths((int)$data['usage_months']);
+            $data['issued_date'] = $issuedDate->startOfDay()->format('Y-m-d H:i:s');
+            $data['expiry_date'] = $expiryDate->endOfDay()->format('Y-m-d H:i:s');
         }
         unset($data['is_unlimited']);
-
 
         DB::beginTransaction();
         try {

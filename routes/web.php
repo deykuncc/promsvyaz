@@ -52,6 +52,7 @@ Route::group(['prefix' => 'reports', 'as' => 'reports.', 'middleware' => ['user-
     Route::get('/statement', [ReportController::class, 'statement'])->name('statement');
     Route::get('/order', [ReportController::class, 'order'])->name('statement');
     Route::get('/employee/{employee}', [ReportController::class, 'employee'])->name('employee');
+    Route::get("/back/{employee}", [ReportController::class, 'employeeBack'])->name('employee-back');
 });
 
 Route::get("/logout", [UsersController::class, 'logout'])->name('logout')->middleware(['user-web']);
