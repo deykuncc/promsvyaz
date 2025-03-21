@@ -35,31 +35,27 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">Фамилия</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" value="{{$employee->last_name}}" type="text" class="form-control"
+                        <input autocomplete="off" value="{{$employee->last_name}}" type="search" class="form-control"
                                id="lastName"
                                placeholder="Иванов" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Имя</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" value="{{$employee->first_name}}" type="text" class="form-control"
+                        <input autocomplete="off" value="{{$employee->first_name}}" type="search" class="form-control"
                                id="firstName"
                                placeholder="Иван" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Отчество</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" {{$employee->middle_name}} type="text" class="form-control"
+                        <input autocomplete="off" {{$employee->middle_name}} type="search" class="form-control"
                                id="middleName"
                                placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Табельный номер</label>
-                        <input type="text" style="display:none" autocomplete="off">
                         <input autocomplete="off" type="number" value="{{$employee->external_id}}" class="form-control"
                                id="externalId"
                                placeholder="Табельный номер" required>
@@ -80,7 +76,7 @@
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
                         <input value="{{\Carbon\Carbon::parse($employee->employment_date)->format('d.m.Y')}}"
                                class="form-control"
-                               autocomplete="off" placeholder="25.12.2000" type="text"
+                               autocomplete="off" placeholder="25.12.2000" type="search"
                                id="startDate">
                     </div>
                     <div class="mb-3">

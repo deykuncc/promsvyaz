@@ -34,35 +34,35 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Фамилия</label>
-                        <input autocomplete="off" value="{{$user->last_name}}" type="text" class="form-control"
+                        <input autocomplete="off" value="{{$user->last_name}}" type="search" class="form-control"
                                id="lastName"
                                placeholder="Иванов" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="firstName" class="form-label">Имя</label>
-                        <input autocomplete="off" value="{{$user->first_name}}" type="text" class="form-control"
+                        <input autocomplete="off" value="{{$user->first_name}}" type="search" class="form-control"
                                id="firstName"
                                placeholder="Иван" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="middleName" class="form-label">Отчество</label>
-                        <input autocomplete="off" value="{{$user->middle_name}}" type="text" class="form-control"
+                        <input autocomplete="off" value="{{$user->middle_name}}" type="search" class="form-control"
                                id="middleName"
                                placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">
                         <label for="brand" class="form-label">Логин</label>
-                        <input autocomplete="off" value="{{$user->login}}" type="text" class="form-control" name="brand"
+                        <input autocomplete="off" value="{{$user->login}}" type="search" class="form-control" name="brand"
                                id="login"
                                placeholder="Ivanov">
                     </div>
 
                     <div class="mb-3">
                         <label for="model" class="form-label">Пароль</label>
-                        <input autocomplete="off" type="text" class="form-control" name="model" id="password"
+                        <input autocomplete="off" type="search" class="form-control" name="model" id="password"
                                placeholder="Qwerty61">
                     </div>
 

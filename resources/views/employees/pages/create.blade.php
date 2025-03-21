@@ -35,35 +35,31 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">Фамилия</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input type="text" class="form-control" id="lastName"
+                        <input type="search" class="form-control" id="lastName"
                                placeholder="Иванов" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Имя</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" type="text" class="form-control" id="firstName"
+                        <input autocomplete="off" type="search" class="form-control" id="firstName"
                                placeholder="Иван" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Отчество</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" type="text" class="form-control" id="middleName"
+                        <input autocomplete="off" type="search" class="form-control" id="middleName"
                                placeholder="Иванович">
                     </div>
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Табельный номер</label>
-                        <input type="text" style="display:none" autocomplete="off">
-                        <input autocomplete="off" type="text" class="form-control" id="externalId"
+                        <input autocomplete="off" type="search" class="form-control" id="externalId"
                                placeholder="Табельный номер" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="gender" class="form-label">Пол</label>
-                        <select  id="gender" class="form-select">
+                        <select id="gender" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($genders as $gender)
                                 <option value="{{$gender->id}}">{{$gender->name}}</option>
@@ -72,15 +68,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" style="display:none" autocomplete="off">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input autocomplete="off" class="form-control" type="text"
-                                placeholder="25.12.2000" id="startDate">
+                        <input autocomplete="off" class="form-control" type="search"
+                               placeholder="25.12.2000" id="startDate">
                     </div>
 
                     <div class="mb-3">
                         <label for="height" class="form-label">Рост</label>
-                        <select  id="height" class="form-select">
+                        <select id="height" class="form-select">
                             <option selected>Выбрать</option>
                             @for($i = 135; $i <= 220; $i++)
                                 <option value="{{$i}}">{{$i}} см.</option>
@@ -100,7 +95,7 @@
 
                     <div class="mb-3">
                         <label for="sizeShoes" class="form-label">Размер обуви</label>
-                        <select  id="sizeShoes" class="form-select">
+                        <select id="sizeShoes" class="form-select">
                             <option selected>Выбрать</option>
                             @foreach($shoesSizes as $size)
                                 <option value="{{$size->id}}">{{$size->size}}</option>
@@ -173,7 +168,6 @@
 <script src="{{url('assets/js/plugins/jquery-ui.js')}}"></script>
 <script src="{{url('assets/js/plugins/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
-<script src="{{url('assets/js/apps/employees/date.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/utils.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/create.js')}}"></script>
 

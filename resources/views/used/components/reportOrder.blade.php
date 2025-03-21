@@ -11,7 +11,7 @@
                 Заполните данные для печати
                 <div class="col mt-3">
                     <label for="untilAtReport" class="text-secondary">Остаток дней</label>
-                    <input autocomplete="off" autocapitalize="off" name="untilAtReport" id="untilAtReport" type="text"
+                    <input autocomplete="off" autocapitalize="off" name="untilAtReport" id="untilAtReport" type="search"
                            value="" class="form-control"
                            placeholder="30">
                 </div>

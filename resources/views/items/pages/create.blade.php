@@ -44,31 +44,31 @@
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Наименование СИЗ</label>
-                        <input autocomplete="off" type="text" class="form-control" id="itemName"
+                        <input autocomplete="off" type="search" class="form-control" id="itemName"
                                placeholder="Введите наименование СИЗ" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Эксплуатационные характеристики</label>
-                        <textarea type="text" name="itemDescription" class="form-control" id="itemDescription"
+                        <textarea type="search" name="itemDescription" class="form-control" id="itemDescription"
                                   placeholder="Введите эксплуатационные характеристики СИЗ"></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="brand" class="form-label">Торговое наименование</label>
-                        <input autocomplete="off" type="text" class="form-control" name="brand" id="itemBrand"
+                        <input autocomplete="off" type="search" class="form-control" name="brand" id="itemBrand"
                                placeholder="Введите торговое наименование">
                     </div>
 
                     <div class="mb-3">
                         <label for="model" class="form-label">Модель, артикул</label>
-                        <input autocomplete="off" type="text" class="form-control" name="model" id="itemModel"
+                        <input autocomplete="off" type="search" class="form-control" name="model" id="itemModel"
                                placeholder="Введите название СИЗ">
                     </div>
 
                     <div class="mb-3">
                         <label for="model" class="form-label">Основание выдачи СИЗ</label>
-                        <input autocomplete="off" type="text" class="form-control" name="normClause" id="normClause"
+                        <input autocomplete="off" type="search" class="form-control" name="normClause" id="normClause"
                                placeholder="П. 165">
                     </div>
 

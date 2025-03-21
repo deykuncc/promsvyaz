@@ -11,12 +11,12 @@
                 Заполните данные для печати
                 <div class="col mt-3">
                     <label for="days" class="text-secondary">Номер ведомости</label>
-                    <input autocomplete="off" autocapitalize="off" name="statementId" id="statementId" type="text" value="" class="form-control"
+                    <input autocomplete="off" autocapitalize="off" name="statementId" id="statementId" type="search" value="" class="form-control"
                            placeholder="78159">
                 </div>
                 <div class="col mt-2">
                     <label for="days" class="text-secondary">Дата ведомости</label>
-                    <input autocomplete="off" autocapitalize="off" name="statementDate" id="statementDate" type="input" value="" class="form-control"
+                    <input autocomplete="off" autocapitalize="off" name="statementDate" id="statementDate" type="search" value="" class="form-control"
                            placeholder="365">
                 </div>
             </div>

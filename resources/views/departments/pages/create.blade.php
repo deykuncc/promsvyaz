@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Название участка</label>
-                        <input autocomplete="off" type="text" class="form-control" id="name"
+                        <input autocomplete="off" type="search" class="form-control" id="name"
                                placeholder="Введите название участка" required>
                     </div>
                     <div class="d-flex justify-content-end">
