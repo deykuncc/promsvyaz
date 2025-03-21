@@ -2,7 +2,6 @@
     data-department-id="{{$department->id}}"
     data-department-name="{{$department->name}}"
 >
-    <th>{{$department->id}}</th>
     <td>{{$department->name}}</td>
     <td>{{$department->employees_count}}</td>
     <td>

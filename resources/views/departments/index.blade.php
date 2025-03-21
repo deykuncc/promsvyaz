@@ -111,7 +111,7 @@
         </div>
         <table class="table">
             <thead>
-            @include('includes.table-rows', ['rows'=>['#', 'Название', 'Кол-во сотрудников', 'Действия']])
+            @include('includes.table-rows', ['rows'=>['Название', 'Кол-во сотрудников', 'Действия']])
             </thead>
             <tbody>
             @if(!$departments->isEmpty())

@@ -112,7 +112,7 @@ function addItem() {
                 data-condition-value="1"
                 data-condition-type="${conditionType}"
                 data-set-after-type-size="${typeSize}"
-                value="${item.id}" >${item.name}</option>`;
+                value="${item.id}" >${item.name} </option>`;
         }
 
         let html =

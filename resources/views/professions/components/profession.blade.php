@@ -2,7 +2,6 @@
     data-profession-id="{{$profession->id}}"
     data-profession-name="{{$profession->name}}"
 >
-    <th>{{$profession->id}}</th>
     <td>{{$profession->name}}</td>
     <td>{{$profession->employees_count}}</td>
     <td>

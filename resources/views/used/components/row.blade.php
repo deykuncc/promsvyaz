@@ -5,7 +5,6 @@
     data-issued-date="{{$item->issued_date ? \Carbon\Carbon::parse($item->issued_date)->format('d.m.Y') : null}}"
     data-usage-months="{{$item->usage_months}}"
     data-size="{{$item->size ? $item->size->id : "Без размера"}}">
-    <th>{{$item->id}}</th>
     <td><a target="_blank"
            href=" {{$item->employee->department != null ? route('departments.edit',['department'=>$item->employee->department->id]) : "#" }}"
            class="text-decoration-none">{{$item->employee->department->name ?? 'Не указан'}}</a></td>

@@ -1,5 +1,4 @@
 <tr data-item-name="{{$item->name}}" data-item-id="{{$item->id}}">
-    <th>{{$item->id}}</th>
     <th>{{$item->name}}</th>
     <td>{{$item->category->name}}</td>
     <td>{{$item->brand}}</td>

@@ -2,11 +2,9 @@
     data-employee-id="{{$employee->id}}"
     data-employee-name="{{$employee->name()}}"
 >
-    <th>{{$employee->id}}</th>
     <td>{{$employee->name()}}</td>
     <td>{{$employee->profession->name ?? ""}}</td>
     <td>{{$employee->department->name ?? ""}}</td>
-    <td>{{$employee->gender->name}}</td>
     <td>
         <div class="d-flex align-items-center gap-3">
             <a title="Редактировать" href="{{route('employees.edit', ['employee' => $employee->id])}}"

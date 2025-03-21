@@ -108,7 +108,7 @@
         </div>
         <table class="table">
             <thead>
-            @include('includes.table-rows', ['rows' => ['#', 'ФИО', 'Логин', 'Должность', 'Действия']])
+            @include('includes.table-rows', ['rows' => [ 'ФИО', 'Логин', 'Должность', 'Действия']])
             </thead>
             <tbody>
             @if(!$users->isEmpty())

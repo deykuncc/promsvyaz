@@ -124,7 +124,7 @@
         </div>
         <table class="table">
             <thead>
-            @include('includes.table-rows', ['rows'=> ['#', 'Участок','ФИО', 'СИЗ' , 'Остаток срока', 'Получен', 'Редактировать']])
+            @include('includes.table-rows', ['rows'=> ['Участок','ФИО', 'СИЗ' , 'Остаток срока', 'Получен', 'Редактировать']])
             </thead>
             <tbody>
             @if(!$items->isEmpty())

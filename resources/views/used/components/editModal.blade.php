@@ -25,6 +25,10 @@
                     <label for="offUntilAt" class="text-secondary">До износа</label>
                     <input autocomplete="off" class="ms-2" id="offExpiryDate" type="checkbox">
                 </div>
+                <div class="col mt-3 d-flex align-items-center">
+                    <label for="isActive" class="text-secondary">Актуально</label>
+                    <input autocomplete="off" class="ms-2" id="isActive" type="checkbox">
+                </div>
                 <div class="col mt-2">
                     <label for="days" class="text-secondary">Размер</label>
                     <div class="d-flex">

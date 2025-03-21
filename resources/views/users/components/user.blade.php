@@ -1,5 +1,4 @@
 <tr data-user-id="{{$user->id}}" data-user-full-name="{{$user->fullName()}}">
-    <th>{{$user->id}}</th>
     <td>{{$user->fullName()}}</td>
     <td>{{$user->login}}</td>
     <td>{{$user->role->name}}</td>
