@@ -111,9 +111,9 @@ class EmployeesService
                 } else {
                     $usagePeriod = (int)$item['dateValue'];
 
-                    $dateHired = now();
+                    $dateHired = Carbon::createFromFormat('d.m.Y', $item['issuedDate']);
 
-                    $expiryDate = (clone $dateHired)->addMonths($usagePeriod);
+                    $expiryDate = (clone $dateHired)->addMonths($usagePeriod)->format('Y-m-d H:i:s');
                     $employeeItems[] = [
                         'employee_id' => $employee->id,
                         'item_id' => $item['id'],
@@ -173,8 +173,8 @@ class EmployeesService
                             'employee_id' => $employee->id,
                             'item_id' => $item['id'],
                             'size_id' => $item['size'] === 'without' ? null : $item['size'],
-                            'issued_date' => ($i === $issueCount - 1) ? null : $issuedDate,
-                            'expiry_date' => ($i === $issueCount - 1) ? null : $expiryDate,
+                            'issued_date' => ($i === $issueCount - 1) ? (clone Carbon::createFromFormat('d.m.Y', $item['issuedDate']))->format('Y-m-d H:i:s') : $issuedDate,
+                            'expiry_date' => ($i === $issueCount - 1) ? (clone Carbon::createFromFormat('d.m.Y', $item['issuedDate']))->addMonths($usagePeriod)->format('Y-m-d H:i:s') : $expiryDate,
                             'usage_months' => $usagePeriod,
                             'quantity' => $item['conditionValue'],
                             'quantity_type' => $item['conditionType'] ?? null,

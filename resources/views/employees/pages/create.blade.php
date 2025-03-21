@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input autocomplete="off" class="form-control" type="search"
+                        <input autocomplete="off" data-date class="form-control" type="search"
                                placeholder="25.12.2000" id="startDate">
                     </div>
 
@@ -141,6 +141,7 @@
                                 <th scope="col">Название</th>
                                 <th scope="col">Количество</th>
                                 <th scope="col">Срок эксплуатации</th>
+                                <th scope="col">Дата получения</th>
                                 <th scope="col">Размер</th>
                                 <th scope="col">Действия</th>
                             </tr>
@@ -170,6 +171,7 @@
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/utils.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/create.js')}}"></script>
+<script src="{{url('assets/js/apps/utils/utils.js')}}"></script>
 
 </body>
 </html>

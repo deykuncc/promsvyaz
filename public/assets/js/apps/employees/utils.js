@@ -147,6 +147,11 @@ function addItem() {
             </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
+                    <input autocomplete="off" data-date data-issued-date style="width: 92px" class="form-control">
+                </div>
+            </td>
+            <td>
+                <div class="d-flex align-items-center gap-1">
                     <select data-size-addon-item style="width: 125px" class="form-select">
                         <option selected>Выбрать</option>
                     </select>
@@ -237,6 +242,11 @@ function addItemOfProfession(item) {
                             <option selected value="months">В месяцах</option>
                             <option value="unlimited">До износа</option>
                     </select>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex align-items-center gap-1">
+                    <input autocomplete="off" data-date data-issued-date style="width: 92px" class="form-control">
                 </div>
             </td>
             <td>
@@ -336,6 +346,11 @@ $(document).ready(function () {
             $(this).parents('tr').attr('data-date-type', type);
         }
         $(this).parents('tr').attr('data-date-value', count);
+    });
+
+    $("body").on("input", 'input[data-issued-date]', function () {
+        let date = $(this).val();
+        $(this).parents("tr").attr('data-issued-date', date);
     });
 
     $("body").on('change', 'select[data-item-select]', function () {

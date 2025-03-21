@@ -22,6 +22,7 @@ function create() {
         let itemName = $(this).attr('data-item-name');
         let conditionType = $(this).attr('data-condition-type');
         let conditionValue = $(this).attr('data-condition-value');
+        let issuedDate = $(this).attr('data-issued-date');
 
         if (!size || size === undefined) {
             return showToast(`Выберите размер для ${itemName}`, 0);
@@ -37,6 +38,10 @@ function create() {
             return showToast(`Укажите количество для ${itemName}`, 0);
         }
 
+        if (!issuedDate) {
+            return showToast(`Укажите дату получения для ${itemName}`, 0);
+        }
+
         items.push(
             {
                 id: id,
@@ -45,6 +50,7 @@ function create() {
                 dateValue: dateValue,
                 conditionType: conditionType,
                 conditionValue: conditionValue,
+                issuedDate: issuedDate
             }
         );
     });

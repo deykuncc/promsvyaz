@@ -74,7 +74,7 @@
 
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Дата поступления на работу</label>
-                        <input value="{{\Carbon\Carbon::parse($employee->employment_date)->format('d.m.Y')}}"
+                        <input data-date value="{{\Carbon\Carbon::parse($employee->employment_date)->format('d.m.Y')}}"
                                class="form-control"
                                autocomplete="off" placeholder="25.12.2000" type="search"
                                id="startDate">
@@ -178,6 +178,7 @@
                                 <th scope="col">Название</th>
                                 <th scope="col">Количество</th>
                                 <th scope="col">Срок эксплуатации</th>
+                                <th scope="col">Дата получения</th>
                                 <th scope="col">Размер</th>
                                 <th scope="col">Действия</th>
                             </tr>
@@ -208,6 +209,7 @@
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/edit.js')}}"></script>
 <script src="{{url('assets/js/apps/employees/utils.js')}}"></script>
+<script src="{{url('assets/js/apps/utils/utils.js')}}"></script>
 
 </body>
 </html>

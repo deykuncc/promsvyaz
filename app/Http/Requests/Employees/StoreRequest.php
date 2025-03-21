@@ -37,6 +37,7 @@ class StoreRequest extends FormRequest
             'items.*.dateValue' => ['nullable'],
             'items.*.conditionType' => ['required', Rule::in(ConditionType::ids())],
             'items.*.conditionValue' => ['required', 'min:1'],
+            'items.*.issuedDate' => ['required', 'date', 'date_format:d.m.Y'],
         ];
     }
 
@@ -82,6 +83,9 @@ class StoreRequest extends FormRequest
             'items.*.dateType.required' => 'Заполните срок эксплуатации для СИЗ',
             'items.*.conditionType.required' => 'Заполните количество для СИЗ',
             'items.*.conditionType.in' => 'Выберите тип количества для СИЗ',
+            'items.*.issuedDate.required' => 'Укажите дату получения',
+            'items.*.issuedDate.date' => 'Неправильный форматы даты получения',
+            'items.*.issuedDate.date_format' => 'Неправильный форматы даты получения',
         ];
     }
 }

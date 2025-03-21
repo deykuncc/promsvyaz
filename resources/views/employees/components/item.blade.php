@@ -20,6 +20,9 @@
         {{$expiryDate}}
     </td>
     <td>
+        {{\Carbon\Carbon::parse($item->issued_date)->format('d.m.Y')}}
+    </td>
+    <td>
         {{$item->size == null ? 'Без размера' : $item->size->size}}
     </td>
     <td>

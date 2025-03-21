@@ -17,6 +17,7 @@ function update() {
     let issuedDate = $("#issuedDate").val();
     let sizeId = $("#sizeId").val();
     let isUnlimited = $("#offExpiryDate").prop('checked') ? 1 : 0;
+    let isActive = $("#isActive").prop('checked') ? 1 : 0;
     let usageMonths = $("#usageMonths").val();
 
     let data = {
@@ -24,6 +25,7 @@ function update() {
         size_id: sizeId,
         is_unlimited: isUnlimited,
         usage_months: usageMonths,
+        is_active: isActive,
     };
 
     ajaxUpdate(id, data).then((response) => {
@@ -107,6 +109,7 @@ $(document).ready(function () {
         $('[data-target-item-name]').text(itemName);
         changeSizeType(typeSize);
         $("#sizeId").val(size);
+        $('#isActive').prop('checked', 1);
 
         if (usageMonths <= 0) {
             $('#offExpiryDate').prop('checked', 1);

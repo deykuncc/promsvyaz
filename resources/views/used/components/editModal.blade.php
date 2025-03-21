@@ -11,7 +11,7 @@
                 Заполните новые данные для&nbsp;<span class="text-primary" data-target-item-name></span>
                 <div class="col mt-3">
                     <label for="untilAtDays" class="text-secondary">Дата получения</label>
-                    <input autocomplete="off" autocapitalize="off" id="issuedDate" type="search"
+                    <input data-date autocomplete="off" autocapitalize="off" id="issuedDate" type="search"
                            value="" class="form-control"
                            placeholder="25.12.2000">
                 </div>

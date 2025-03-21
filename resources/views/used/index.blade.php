@@ -144,6 +144,7 @@
 <script src="{{url('assets/js/plugins/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/apps/used/index.js')}}"></script>
+<script src="{{url('assets/js/apps/utils/utils.js')}}"></script>
 
 </body>
 </html>
