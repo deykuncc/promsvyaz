@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">Фамилия</label>
-                        <input type="search" class="form-control" id="lastName"
+                        <input autocomplete="off" type="search" class="form-control" id="lastName"
                                placeholder="Иванов" required>
                     </div>
 
