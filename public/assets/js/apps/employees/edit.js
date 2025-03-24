@@ -62,7 +62,6 @@ function saveItems() {
         let conditionType = $(this).attr('data-condition-type');
         let conditionValue = $(this).attr('data-condition-value');
         let issuedDate = $(this).attr('data-issued-date');
-
         if (!size || size === undefined) {
             return showToast(`Выберите размер для ${itemName}`, 0);
         }
