@@ -244,7 +244,7 @@
                 <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <td>{{$item->item->name}}</td>
+                        <td>{{$item->item->brand}}</td>
                         <td>{{$item->item->norm_clause}}</td>
                         <td>{{$item->quantity_type}}</td>
                         <td>{{$item->quantity}}</td>
