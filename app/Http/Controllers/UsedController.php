@@ -14,11 +14,11 @@ class UsedController extends Controller
     public function index(Request $request)
     {
         $items = EmployeeItem::query()
+            ->with(['item', 'employee'])
             ->whereHas('employee')
             ->where('is_active', true)
             ->with(['employee', 'item'])
-            ->orderby('issued_date')
-            ->orderByDesc('id');
+            ->orderBy('expiry_date');
 
         if (($nameItem = $request->input('nameItem'))) {
             $items->whereHas('item', function ($query) use ($nameItem) {

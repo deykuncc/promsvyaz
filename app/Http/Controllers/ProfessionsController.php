@@ -11,7 +11,9 @@ class ProfessionsController extends Controller
 {
     public function index(Request $request)
     {
-        $professions = Profession::query()->withCount('employees');
+        $professions = Profession::query()
+            ->orderBy('name')
+            ->withCount('employees');
 
         if (($professionId = $request->input('id'))) {
             $professions->where('id', '=', $professionId);
@@ -31,7 +33,7 @@ class ProfessionsController extends Controller
 
     public function create()
     {
-        $items = Item::all();
+        $items = Item::query()->orderBy('name')->get();
         $data = ['title' => 'Добавить профессию', 'items' => $items];
         return view('professions.pages.create', $data);
     }
@@ -41,7 +43,10 @@ class ProfessionsController extends Controller
         $profession->load(['items' => function ($query) {
             $query->with('item');
         }]);
-        $items = Item::query()->whereNotIn('id', $profession->items()->pluck('item_id'))->get();
+        $items = Item::query()
+            ->orderBy('name')
+            ->whereNotIn('id', $profession->items()->pluck('item_id'))
+            ->get();
         $data = ['title' => 'Редактировать профессию', 'profession' => $profession, 'items' => $items];
         return view('professions.pages.edit', $data);
     }

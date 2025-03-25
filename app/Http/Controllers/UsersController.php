@@ -21,6 +21,9 @@ class UsersController extends Controller
         $user = Auth::guard('web')->user();
 
         $users = User::query()
+            ->orderBy('last_name')
+            ->orderBy('first_name')
+            ->orderBy('middle_name')
             ->where('id', '!=', $user->id)
             ->with('role');
 

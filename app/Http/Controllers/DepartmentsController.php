@@ -11,6 +11,7 @@ class DepartmentsController extends Controller
     public function index(Request $request)
     {
         $departments = Department::query()
+            ->orderBy('name')
             ->withCount('employees');
 
         if (($name = $request->input('name'))) {

@@ -44,9 +44,7 @@ function setSelectors() {
         $(this).find('select[data-id="sizeAddon"]').val($(this).attr('data-set-after-type-size')).change();
 
         if (sizeId != 0) {
-            console.info(sizeId);
             $(this).find('select[data-size-addon-item]').val(sizeId).change();
-            console.info('setsize: ', $(this).find('select[data-size-addon-item]').val());
         }
     });
 }
@@ -112,6 +110,7 @@ function addItem() {
                 data-condition-value="1"
                 data-condition-type="${conditionType}"
                 data-set-after-type-size="${typeSize}"
+                data-brand-name="${item.brand ?? ''}"
                 value="${item.id}" >${item.name} </option>`;
         }
 
@@ -124,6 +123,7 @@ function addItem() {
                     ${itemsHtml}
                 </select>
             </td>
+            <td><span data-brand-name-value></span></td>
             <td>
                 <div class="d-flex align-items-center gap-1">
                     <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
@@ -223,6 +223,7 @@ function addItemOfProfession(item) {
         data-set-after-type-size="${typeSize}"
         >
             <td>${item.item.name}</td>
+            <td>${item.item.brand}</td>
             <td>
                 <div class="d-flex align-items-center gap-1">
                    <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
@@ -357,10 +358,12 @@ $(document).ready(function () {
         let option = $(this).find("option:selected");
         let itemId = $(this).val();
         let itemName = option.text();
+        let brandName = option.attr('data-brand-name');
         $(this).parents('tr').attr('data-item-id', itemId);
         $(this).parents('tr').attr('data-item-name', itemName);
         $(this).parents('tr').attr('data-condition-type', option.attr('data-condition-type'));
         $(this).parents('tr').attr('data-set-after-type-size', option.attr('data-set-after-type-size'));
+        $(this).parents('tr').find('td').find('span[data-brand-name-value]').text(brandName);
         setSelectors();
     });
 

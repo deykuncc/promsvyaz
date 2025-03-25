@@ -26,6 +26,9 @@ class EmployeesController extends Controller
     public function index(Request $request)
     {
         $employees = Employee::query()
+            ->orderBy('last_name')
+            ->orderBy('first_name')
+            ->orderBy('middle_name')
             ->with(['department', 'gender', 'profession']);
 
         if (($professionId = $request->input('profession'))) {

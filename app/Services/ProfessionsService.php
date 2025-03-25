@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Log;
 
 class ProfessionsService
 {
+    public function __construct(private EmployeesService $employeesService)
+    {
+
+    }
+
     /**
      * @param array $data
      * @return void

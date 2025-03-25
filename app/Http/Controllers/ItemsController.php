@@ -19,6 +19,7 @@ class ItemsController extends Controller
     public function index(Request $request)
     {
         $items = Item::query()
+            ->orderBy('name')
             ->with('category');
 
         if (($categoryId = $request->input('category'))) {
