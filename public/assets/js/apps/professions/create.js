@@ -1,10 +1,32 @@
 function create() {
     let name = $("#name").val();
     let items = [];
+    let error = false;
 
     $(".remove-siz").each(function (index) {
-        items.push(parseInt($(this).attr('item-id')));
+        let li = $(this).parents('li');
+        let itemName = li.attr('item-name');
+        let expiryType = li.attr('expiry-type');
+        let expiryValue = li.attr('expiry-value') ?? 0;
+
+        if (expiryType === undefined || expiryType.length <= 0) {
+            error = true;
+            return showToast(`Выберите срок эксплуатации для ${itemName}`);
+        }
+
+        if (expiryType === 'months' && expiryValue <= 0 || isNaN(parseInt(expiryValue))) {
+            error = true;
+            return showToast(`Укажите срок эксплуатации для ${itemName}`);
+        }
+
+        items.push({
+            id: parseInt($(this).attr('item-id')),
+            expiryType: expiryType,
+            expiryValue: !isNaN(parseInt(expiryValue)) ? parseInt(expiryValue) : null,
+        });
     });
+
+    if (error) return;
 
     if (items.length <= 0) {
         return showToast('Выберите СИЗ', 0);
@@ -22,12 +44,8 @@ function create() {
 function ajaxCreate(name, items) {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: "/api/professions",
-            type: 'post',
-            dataType: 'json',
-            data: {
-                name: name,
-                items: items,
+            url: "/api/professions", type: 'post', dataType: 'json', data: {
+                name: name, items: items,
             }
         }).done((response) => {
             resolve(response);

@@ -49,13 +49,22 @@ class ProfessionsService
      */
     public function update(int $professionId, array $data): void
     {
-        $items = $this->getItems($professionId, $data['items']);
-        unset($data['items']);
+        if (!empty($data['items'])) {
+            $items = $this->getItems($professionId, $data['items']);
+        }
 
         DB::beginTransaction();
         try {
-            ProfessionItem::query()->where('profession_id', $professionId)->delete();
-            ProfessionItem::query()->insert($items);
+
+            if (!empty($data['removed_items'])) {
+                ProfessionItem::query()->whereIn('item_id', $data['removed_items'])->delete();
+                unset($data['removed_items']);
+            }
+            if (!empty($items)) {
+                ProfessionItem::query()->insert($items);
+                $this->employeesService->addItemsByUpdateProfession($professionId, $data['items']);
+                unset($data['items']);
+            }
 
             $profession = $this->getProfession($professionId);
             $profession->fill($data)->save();
@@ -112,8 +121,8 @@ class ProfessionsService
     private function getItems(int $professionId, array $items): array
     {
         $result = [];
-        foreach ($items as $itemId) {
-            $result[] = ['profession_id' => $professionId, 'item_id' => $itemId];
+        foreach ($items as $item) {
+            $result[] = ['profession_id' => $professionId, 'item_id' => (int)$item['id'], 'expiry_months' => $item['expiryType'] == 'months' ? (int) $item['expiryValue'] : null];
         }
         return $result;
     }

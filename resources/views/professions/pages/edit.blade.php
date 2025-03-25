@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="{{url('assets/css/custom/sweetalerts.css')}}">
 </head>
 
+<style>
+    .mxw {
+        max-width: 540px;
+        word-break: break-word;
+        white-space: pre-wrap;
+    }
+</style>
+
 <body>
 @include('includes.header')
 <input type="hidden" value="{{$profession->id}}" id="professionId">
@@ -34,7 +42,8 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Название профессии</label>
-                        <input autocomplete="off" type="search" class="form-control" id="name" value="{{$profession->name}}"
+                        <input autocomplete="off" type="search" class="form-control" id="name"
+                               value="{{$profession->name}}"
                                placeholder="Введите название профессии" required>
                     </div>
                     <div class="mb-3">
@@ -44,7 +53,7 @@
                         <ul class="list-group" style="max-height: 250px; overflow-y: auto;" id="available-siz">
                             @if(!$items->isEmpty())
                                 @foreach($items as $item)
-                                    @include('professions.components.item',['item' => $item])
+                                    @include('professions.components.item',['item' => $item, 'remove' => false])
                                 @endforeach
                             @endif
                         </ul>
@@ -54,7 +63,7 @@
                         <ul class="list-group" id="selected-siz">
                             @if(!$profession->items->isEmpty())
                                 @foreach($profession->items as $removeItem)
-                                    @include('professions.components.item',['remove'=> true, 'item' => $removeItem->item])
+                                    @include('professions.components.item',['remove'=> true, 'item' => $removeItem->item, 'professionItem'=>$removeItem])
                                 @endforeach
                             @endif
                         </ul>

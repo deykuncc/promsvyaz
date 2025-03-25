@@ -15,9 +15,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', Rule::unique('professions','name')->whereNull('deleted_at'), 'max:255'],
+            'name' => ['required', 'string', Rule::unique('professions', 'name')->whereNull('deleted_at'), 'max:255'],
             'items' => ['required', 'array'],
-            'items.*' => ['exists:items,id'],
+            'items.*.id' => ['exists:items,id'],
+            'items.*.expiryType' => ['in:unlimited,months'],
+            'items.*.expiryValue' => ['nullable', 'integer', 'max:100'],
         ];
     }
 
@@ -28,7 +30,10 @@ class StoreRequest extends FormRequest
             'name.string' => "Введите название",
             'name.unique' => "Такая профессия уже создана",
             'items.required' => 'Выберите СИЗ',
-            'items.*.exists' => 'СИЗ не найден',
+            'items.*.id.exists' => 'СИЗ не найден',
+            'items.*.expiryType.in' => 'Выберите срок эксплуатации',
+            'items.*.expiryValue.integer' => 'Укажите срок эксплуатации',
+            'items.*.expiryValue.max' => 'Срок превышает :max месяцев',
         ];
     }
 }

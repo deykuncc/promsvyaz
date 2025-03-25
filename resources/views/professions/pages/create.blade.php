@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="{{url('assets/css/custom/sweetalerts.css')}}">
 </head>
 
+<style>
+    .mxw {
+        max-width: 540px;
+        word-break: break-word;
+        white-space: pre-wrap;
+    }
+</style>
+
 <body>
 @include('includes.header')
 

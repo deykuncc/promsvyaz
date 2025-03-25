@@ -15,8 +15,12 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'items' => ['required', 'array'],
-            'items.*' => ['exists:items,id'],
+            'items' => ['nullable', 'array'],
+            'items.*.id' => ['exists:items,id'],
+            'items.*.expiryType' => ['in:unlimited,months'],
+            'items.*.expiryValue' => ['nullable', 'integer', 'max:100'],
+            'removed_items' => ['nullable', 'array'],
+            'removed_items.*' => ['exists:items,id'],
         ];
     }
 
@@ -26,7 +30,10 @@ class UpdateRequest extends FormRequest
             'name.required' => 'Введите название',
             'name.string' => "Введите название",
             'items.required' => 'Выберите СИЗ',
-            'items.*.exists' => 'СИЗ не найден',
+            'items.*.id.exists' => 'СИЗ не найден',
+            'items.*.expiryType.in' => 'Выберите срок эксплуатации',
+            'items.*.expiryValue.integer' => 'Укажите срок эксплуатации',
+            'items.*.expiryValue.max' => 'Срок превышает :max месяцев',
         ];
     }
 }

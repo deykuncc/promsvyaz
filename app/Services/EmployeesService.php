@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Enums\ConditionType;
 use App\Exceptions\CannotStoreEmployeeException;
 use App\Exceptions\CannotUpdateEmployeeException;
 use App\Exceptions\CannotUpdateEmployeeItemsException;
 use App\Models\Employee;
 use App\Models\EmployeeItem;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -154,6 +156,8 @@ class EmployeesService
                         'quantity' => $item['conditionValue'],
                         'quantity_type' => $item['conditionType'] ?? null,
                         'is_active' => true,
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ];
                 } else {
                     $usagePeriod = (int)$item['dateValue'];
@@ -179,6 +183,8 @@ class EmployeesService
                             'quantity' => $item['conditionValue'],
                             'quantity_type' => $item['conditionType'] ?? null,
                             'is_active' => ($i === $issueCount - 1) ? true : false,
+                            'created_at' => now(),
+                            'updated_at' => now(),
                         ];
                     }
                 }
@@ -226,6 +232,61 @@ class EmployeesService
             'department_id' => $data['department_id'],
             'profession_id' => $data['profession_id'],
         ]);
+    }
+
+    public function addItemsByUpdateProfession(int $professionId, array $data): void
+    {
+        $issuedDate = Carbon::now();
+        $employees = Employee::query()->where('profession_id', $professionId)->get();
+        $itemsInsert = [];
+        foreach ($data as $item) {
+            if ($item['expiryType'] == 'unlimited') {
+                $expiryDate = null;
+            } else {
+                $months = (int)$item['expiryValue'];
+                $expiryDate = (clone $issuedDate)->addMonths($months);
+            }
+
+
+            $item = Item::query()
+                ->with('category')
+                ->where('id', $item['id'])
+                ->first();
+
+            foreach ($employees as $employee) {
+                $sizeId = null;
+                $quantity = 1;
+                $quantityType = 1;
+                if ($item->category->name_eng === 'clothes') {
+                    $sizeId = $employee->clothes_size_id;
+                } else if ($item->category->name_eng === 'shoes') {
+                    $sizeId = $employee->shoes_size_id;
+                    $quantityType = 2;
+                } else if ($item->category->name_eng === 'hats') {
+                    $sizeId = $employee->hats_size_id;
+                } else if ($item->category->name_eng === 'hands') {
+                    $quantityType = 2;
+                } else if ($item->category->name_eng === 'clear') {
+                    $quantityType = 3;
+                    $quantity = 1000;
+                }
+
+                $itemsInsert[] = [
+                    'employee_id' => $employee->id,
+                    'item_id' => $item['id'],
+                    'size_id' => $sizeId,
+                    'usage_months' => $item['expiryType'] == 'unlimted' ? null : $item['expiryValue'],
+                    'expiry_date' => $expiryDate,
+                    'issued_date' => $issuedDate,
+                    'quantity' => $quantity,
+                    'quantity_type' => $quantityType,
+                    'is_active' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+        EmployeeItem::query()->insert($itemsInsert);
     }
 
 }

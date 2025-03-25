@@ -15,6 +15,7 @@ class ProfessionItem extends Model
     protected $fillable = [
         'profession_id',
         'item_id',
+        'expiry_months',
         'created_at',
         'updated_at',
         'deleted_at'
