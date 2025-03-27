@@ -5,26 +5,47 @@ $(document).ready(function () {
         let itemName = $(this).attr('item-name');
         let itemBrand = $(this).attr('item-brand');
         let itemId = $(this).attr('item-id');
-        let $newItem = $('<li></li>').addClass('list-group-item d-flex justify-content-between align-items-center').attr('item-name', itemName);
-        $newItem.append(`
-         <div class="d-flex align-items-center w-75 justify-content-between">
-            <div class="d-flex flex-column mxw">
-                <span>${itemName}</span>
-                <span class="text-secondary">${itemBrand}</span>
-            </div>
+        let category = $(this).attr('category-name');
+
+        let $newItem = $('<li></li>')
+            .addClass('list-group-item d-flex justify-content-between align-items-center')
+            .attr('item-name', itemName)
+            .attr('category-name', category);
+
+        let additionalBlock = category === 'clear' ? `
             <div class="d-flex flex-column">
-                 <span class="text-secondary fs-7">Срок эксплуатации</span>
+                <span class="text-secondary fs-7">Количество</span>
                 <div class="d-flex align-items-center gap-1">
-                       <input  style="display: none; max-width: 60px;" data-expiry-value type="search" class="form-control"/>
-                       <select data-select-expiry class="form-select">
+                    <input style="display: none; max-width: 60px;" data-condition-value type="search" class="form-control"/>
+                    <select data-select-condition class="form-select">
+                        <option value="">Выберите</option>
+                        <option value="1">Шт</option>
+                        <option value="3">Мл</option>
+                        <option value="4">Гр</option>
+                    </select>
+                </div>
+            </div>` : '';
+
+        $newItem.append(`
+            <div class="d-flex align-items-center w-75 justify-content-between">
+                <div class="d-flex flex-column mxw">
+                    <span>${itemName}</span>
+                    <span class="text-secondary">${itemBrand}</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="text-secondary fs-7">Срок эксплуатации</span>
+                    <div class="d-flex align-items-center gap-1">
+                        <input style="display: none; max-width: 60px;" data-expiry-value type="search" class="form-control"/>
+                        <select data-select-expiry class="form-select">
                             <option value="">Выберите</option>
                             <option value="unlimited">Бессрочно</option>
                             <option value="months">В месяцах</option>
                         </select>
-                  </div>
+                    </div>
+                </div>
+                ${additionalBlock}
             </div>
-         </div>
-        `)
+    `);
         let $removeButton = $("<button></button>").addClass('btn btn-sm btn-outline-danger remove-siz');
         $removeButton.attr('item-name', itemName);
         $removeButton.attr('item-id', itemId);
@@ -63,8 +84,26 @@ $(document).ready(function () {
         li.attr('expiry-type', $(this).val());
     });
 
+    $("body").on('click', '[data-select-condition]', function () {
+        let li = $(this).parents('li');
+        let input = $(this).siblings('input');
+        if ($(this).val() === '') {
+            input.hide();
+            input.val('');
+            li.removeAttr('condition-value');
+        } else {
+            input.show();
+            li.attr('condition-type', $(this).val());
+        }
+
+    });
+
     $('body').on('input', '[data-expiry-value]', function () {
         $(this).parents('li').attr('expiry-value', $(this).val());
+    });
+
+    $('body').on('input', '[data-condition-value]', function () {
+        $(this).parents('li').attr('condition-value', $(this).val());
     });
 
 });

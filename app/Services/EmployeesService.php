@@ -248,7 +248,7 @@ class EmployeesService
             }
 
 
-            $item = Item::query()
+            $getItem = Item::query()
                 ->with('category')
                 ->where('id', $item['id'])
                 ->first();
@@ -257,25 +257,25 @@ class EmployeesService
                 $sizeId = null;
                 $quantity = 1;
                 $quantityType = 1;
-                if ($item->category->name_eng === 'clothes') {
+                if ($getItem->category->name_eng === 'clothes') {
                     $sizeId = $employee->clothes_size_id;
-                } else if ($item->category->name_eng === 'shoes') {
+                } else if ($getItem->category->name_eng === 'shoes') {
                     $sizeId = $employee->shoes_size_id;
                     $quantityType = 2;
-                } else if ($item->category->name_eng === 'hats') {
+                } else if ($getItem->category->name_eng === 'hats') {
                     $sizeId = $employee->hats_size_id;
-                } else if ($item->category->name_eng === 'hands') {
+                } else if ($getItem->category->name_eng === 'hands') {
                     $quantityType = 2;
-                } else if ($item->category->name_eng === 'clear') {
-                    $quantityType = 3;
-                    $quantity = 1000;
+                } else if ($getItem->category->name_eng === 'clear') {
+                    $quantityType = $data['conditionType'] ?? 3;
+                    $quantity = $data['conditionValue'] ?? 1000;
                 }
 
                 $itemsInsert[] = [
                     'employee_id' => $employee->id,
                     'item_id' => $item['id'],
                     'size_id' => $sizeId,
-                    'usage_months' => $item['expiryType'] == 'unlimted' ? null : $item['expiryValue'],
+                    'usage_months' => $item['expiryType'] == 'unlimited' ? null : $item['expiryValue'],
                     'expiry_date' => $expiryDate,
                     'issued_date' => $issuedDate,
                     'quantity' => $quantity,

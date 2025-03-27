@@ -5,9 +5,17 @@ function create() {
 
     $(".remove-siz").each(function (index) {
         let li = $(this).parents('li');
+        let categoryName = li.attr('category-name');
         let itemName = li.attr('item-name');
-        let expiryType = li.attr('expiry-type');
+        let expiryType = li.attr('expiry-type') ?? undefined;
         let expiryValue = li.attr('expiry-value') ?? 0;
+        let conditionValue = li.attr('condition-value') ?? 0;
+        let conditionType = li.attr('condition-type') ?? null;
+
+        if (categoryName === 'clear' && (isNaN(conditionType) || conditionValue <= 0 || conditionValue === undefined || isNaN(conditionValue))){
+            error = true;
+            return showToast(`Выберите количество для ${itemName}`);
+        }
 
         if (expiryType === undefined || expiryType.length <= 0) {
             error = true;
@@ -23,6 +31,8 @@ function create() {
             id: parseInt($(this).attr('item-id')),
             expiryType: expiryType,
             expiryValue: !isNaN(parseInt(expiryValue)) ? parseInt(expiryValue) : null,
+            conditionType: categoryName === 'clear' ? parseInt(conditionType) : null,
+            conditionValue: categoryName === 'clear' ? parseInt(conditionValue) : null,
         });
     });
 

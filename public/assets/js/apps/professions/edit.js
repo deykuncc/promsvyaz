@@ -2,14 +2,23 @@ function update(removedItems) {
     let professionId = $("#professionId").val();
     let name = $("#name").val();
     let items = [];
+    let error = false;
 
     $(".remove-siz").each(function (index) {
         if ($(this).attr('has') !== undefined) return;
 
         let li = $(this).parents('li');
+        let categoryName = li.attr('category-name');
         let itemName = li.attr('item-name');
         let expiryType = li.attr('expiry-type');
         let expiryValue = li.attr('expiry-value') ?? 0;
+        let conditionValue = li.attr('condition-value') ?? null;
+        let conditionType = li.attr('condition-type') ?? null;
+
+        if (categoryName === 'clear' && (isNaN(conditionType) || conditionValue <= 0 || conditionValue === undefined || isNaN(conditionValue))) {
+            error = true;
+            return showToast(`Выберите количество для ${itemName}`);
+        }
 
         if (expiryType === undefined || expiryType.length <= 0) {
             error = true;
@@ -21,14 +30,19 @@ function update(removedItems) {
             return showToast(`Укажите срок эксплуатации для ${itemName}`);
         }
 
+
         items.push({
             id: parseInt($(this).attr('item-id')),
             expiryType: expiryType,
             expiryValue: !isNaN(parseInt(expiryValue)) ? parseInt(expiryValue) : null,
+            conditionType: categoryName === 'clear' ? parseInt(conditionType) : null,
+            conditionValue: categoryName === 'clear' ? parseInt(conditionValue) : null,
         });
     });
 
-    if (items.length <= 0) {
+    if (error) return;
+
+    if (items.length <= 0 && removedItems.length <= 0) {
         return showToast('Выберите СИЗ', 0);
     }
 

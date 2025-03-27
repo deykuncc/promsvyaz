@@ -12,6 +12,8 @@ return new class extends Migration {
     {
         Schema::table('profession_items', function (Blueprint $table) {
             $table->unsignedBigInteger('expiry_months')->after('item_id')->nullable();
+            $table->unsignedTinyInteger('quantity_type')->after('expiry_months')->nullable()->default(null);
+            $table->unsignedBigInteger('quantity')->after('quantity_type')->nullable()->default(null);
         });
     }
 

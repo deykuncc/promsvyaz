@@ -194,13 +194,17 @@ function addItemOfProfession(item) {
     let category = item.item.category.name_eng;
     let conditionType = 0;
     let typeSize = "";
+    let conditionValue = 1;
+    let expiry = item.expiry_months;
     if (['clothes', 'others', 'hats'].includes(category)) {
         conditionType = 1;
     } else if (['hands', 'shoes'].includes(category)) {
         conditionType = 2;
     } else if (['clear'].includes(category)) {
-        conditionType = 3;
+        conditionType = item.quantity_type_orig;
+        conditionValue = item.quantity;
     }
+
 
     if (category == 'clothes') {
         typeSize = 'clothesAddon';
@@ -212,6 +216,8 @@ function addItemOfProfession(item) {
         typeSize = 'shoesAddon';
     }
 
+    let dataDateValue = expiry ? `data-date-value="${expiry}"` : '';
+
 
     let html =
         `
@@ -219,14 +225,16 @@ function addItemOfProfession(item) {
         data-item-name="${item.item.name}"
         data-item-id="${item.item.id}"
         data-condition-type="${conditionType}"
-        data-condition-value="1"
+        data-condition-value="${conditionValue}"
         data-set-after-type-size="${typeSize}"
+        data-date-type="${!expiry ? 'unlimited' : 'months'}"
+        ${dataDateValue}
         >
             <td>${item.item.name}</td>
-            <td>${item.item.brand}</td>
+            <td>${item.item.brand ?? ""}</td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                   <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
+                   <input autocomplete="off" data-condition-value value="${conditionValue}" style="width: 60px" class="form-control">
                     <select data-condition-type style="width: 85px" class="form-select">
                         <option>Выберите</option>
                         <option ${['clothes', 'others', 'hats'].includes(category) ? 'selected' : ''} value="1">Шт</option>
@@ -238,10 +246,10 @@ function addItemOfProfession(item) {
             </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
-                    <input autocomplete="off" data-date-value style="width: 60px" class="form-control">
+                    <input autocomplete="off" data-date-value style="width: 60px; display: ${!expiry ? 'none' : ''}" value="${expiry ? expiry : ''}" class="form-control">
                     <select data-date-type style="width: 125px" class="form-select">
-                            <option selected value="months">В месяцах</option>
-                            <option value="unlimited">До износа</option>
+                            <option ${expiry ? 'selected' : ''} value="months">В месяцах</option>
+                            <option ${!expiry ? 'selected' : ''} value="unlimited">До износа</option>
                     </select>
                 </div>
             </td>

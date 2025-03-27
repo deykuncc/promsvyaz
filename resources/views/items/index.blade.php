@@ -108,7 +108,7 @@
         </div>
         <table class="table">
             <thead>
-            @include('includes.table-rows',['rows'=>['Название', 'Категория', 'Бренд', 'Модель', 'Действия']])
+            @include('includes.table-rows',['rows'=>['Название', 'Категория', 'Торговое наименование', 'Модель', 'Действия']])
             </thead>
             <tbody>
             @if(!$items->isEmpty())

@@ -139,6 +139,7 @@
                             <thead class="table-dark">
                             <tr>
                                 <th scope="col">Название</th>
+                                <th scope="col">Торговое наименование</th>
                                 <th scope="col">Количество</th>
                                 <th scope="col">Срок эксплуатации</th>
                                 <th scope="col">Дата получения</th>

@@ -14,6 +14,15 @@
                     <span>{{$professionItem->expiry_months != null ? 'Месяцев' : 'Бессрочно'}}</span>
                 </div>
             </div>
+            @if($item->category->name_eng === 'clear')
+                <div class="d-flex flex-column">
+                    <span class="text-secondary fs-7">Количество</span>
+                    <div class="d-flex align-items-center gap-1">
+                        <span>{{$professionItem->quantity}}</span>
+                        <span>{{$professionItem->quantity_type}}</span>
+                    </div>
+                </div>
+            @endif
         @endif
     </div>
 
@@ -21,6 +30,7 @@
         item-brand="{{$item->brand ?? ''}}"
         item-name="{{$item->name}}"
         item-id="{{$item->id}}"
+        category-name="{{$item->category->name_eng}}"
         {{ !empty($professionItem) && $professionItem->item_id == $item->id ? 'has' : ''}}
         type="button"
         class="btn btn-sm {{empty($remove) ? 'add-siz btn-outline-primary' : 'remove-siz btn-outline-danger'}}">

@@ -35,14 +35,14 @@ class UsedController extends Controller
     public function update(UpdateRequest $request, int $id)
     {
         $data = $request->validated();
+        $issuedDate = Carbon::createFromFormat('d.m.Y', $data['issued_date']);
+        $data['issued_date'] = $issuedDate->startOfDay()->format('Y-m-d H:i:s');
 
         if ($data['is_unlimited']) {
             $data['expiry_date'] = null;
             $data['usage_months'] = 0;
         } else {
-            $issuedDate = Carbon::createFromFormat('d.m.Y', $data['issued_date']);
             $expiryDate = (clone $issuedDate)->addMonths((int)$data['usage_months']);
-            $data['issued_date'] = $issuedDate->startOfDay()->format('Y-m-d H:i:s');
             $data['expiry_date'] = $expiryDate->endOfDay()->format('Y-m-d H:i:s');
         }
         unset($data['is_unlimited']);

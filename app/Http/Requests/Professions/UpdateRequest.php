@@ -19,6 +19,8 @@ class UpdateRequest extends FormRequest
             'items.*.id' => ['exists:items,id'],
             'items.*.expiryType' => ['in:unlimited,months'],
             'items.*.expiryValue' => ['nullable', 'integer', 'max:100'],
+            'items.*.conditionValue' => ['nullable', 'integer', 'max:999999'],
+            'items.*.conditionType' => ['nullable', 'integer', 'in:1,3,4'],
             'removed_items' => ['nullable', 'array'],
             'removed_items.*' => ['exists:items,id'],
         ];
@@ -34,6 +36,9 @@ class UpdateRequest extends FormRequest
             'items.*.expiryType.in' => 'Выберите срок эксплуатации',
             'items.*.expiryValue.integer' => 'Укажите срок эксплуатации',
             'items.*.expiryValue.max' => 'Срок превышает :max месяцев',
+            'items.*.conditionValue.integer' => 'Укажите количество',
+            'items.*.conditionValue.max' => 'Количество превышает :max',
+            'items.*.conditionType.in' => 'Укажите количество',
         ];
     }
 }
