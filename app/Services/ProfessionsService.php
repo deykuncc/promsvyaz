@@ -6,6 +6,7 @@ use App\Exceptions\CannotStoreProfessionException;
 use App\Models\ActionLog;
 use App\Models\Profession;
 use App\Models\ProfessionItem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -99,23 +100,16 @@ class ProfessionsService
         }
     }
 
-    public function items(int $professionId)
+    public function items(int $professionId): Collection
     {
-        $professionItems = ProfessionItem::query()
-            ->select('item_id', 'profession_id', 'quantity', 'quantity_type', 'expiry_months')
-            ->with('item', function ($query) {
-                $query->with(['category' => function ($query) {
-                    $query->select('id', 'name_eng');
-                }])->select('id', 'category_id', 'name', 'brand');
-            })
-            ->where('profession_id', $professionId)
+        return ProfessionItem::query()
+            ->with(['item.category', 'brand'])
+            ->where('profession_id', '=', $professionId)
             ->get()
             ->transform(function ($item) {
                 $item->quantity_type_orig = $item->quantityTypeOrig();
                 return $item;
             });
-
-        return $professionItems;
     }
 
     /**
@@ -130,6 +124,7 @@ class ProfessionsService
             $result[] = [
                 'profession_id' => $professionId,
                 'item_id' => (int)$item['id'],
+                'brand_id' => $item['brandId'],
                 'expiry_months' => $item['expiryType'] == 'months' ? (int)$item['expiryValue'] : null,
                 'quantity_type' => !empty($item['conditionType']) ? $item['conditionType'] : null,
                 'quantity' => !empty($item['conditionValue']) ? $item['conditionValue'] : null,

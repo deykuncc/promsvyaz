@@ -22,6 +22,7 @@ class StoreRequest extends FormRequest
             'items.*.expiryValue' => ['nullable', 'integer', 'max:100'],
             'items.*.conditionValue' => ['nullable', 'integer', 'max:999999'],
             'items.*.conditionType' => ['nullable', 'integer', 'in:1,3,4'],
+            'items.*.brandId' => ['integer', 'exists:item_brands,id'],
         ];
     }
 
@@ -39,6 +40,7 @@ class StoreRequest extends FormRequest
             'items.*.conditionValue.integer' => 'Укажите количество',
             'items.*.conditionValue.max' => 'Количество превышает :max',
             'items.*.conditionType.in' => 'Укажите количество',
+            'items.*.brandId.in' => 'Бренд не найден',
         ];
     }
 }

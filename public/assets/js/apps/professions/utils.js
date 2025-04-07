@@ -3,9 +3,11 @@ $(document).ready(function () {
         let element = $(this).parent();
         element.remove();
         let itemName = $(this).attr('item-name');
-        let itemBrand = $(this).attr('item-brand');
+        let itemBrands = JSON.parse($(this).attr('item-brands'));
         let itemId = $(this).attr('item-id');
         let category = $(this).attr('category-name');
+
+        console.info(itemBrands);
 
         let $newItem = $('<li></li>')
             .addClass('list-group-item d-flex justify-content-between align-items-center')
@@ -26,11 +28,25 @@ $(document).ready(function () {
                 </div>
             </div>` : '';
 
+        let brands = "";
+        for (let x in itemBrands) {
+            brands += `<option value="${itemBrands[x]['id']}">${itemBrands[x]['name']}</option>`;
+        }
+
         $newItem.append(`
             <div class="d-flex align-items-center w-75 justify-content-between">
                 <div class="d-flex flex-column mxw">
                     <span>${itemName}</span>
-                    <span class="text-secondary">${itemBrand}</span>
+                    <div style="margin-top: 10px;" class="d-flex flex-column">
+                        <span class="text-secondary fs-7">Торговое наименование</span>
+                        <div class="d-flex align-items-center gap-1">
+                            <input style="display: none; max-width: 60px;" data-expiry-value type="search" class="form-control"/>
+                            <select data-select-brand class="form-select">
+                                <option value="">Выберите</option>
+                                ${brands}
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex flex-column">
                     <span class="text-secondary fs-7">Срок эксплуатации</span>
@@ -70,7 +86,7 @@ $(document).ready(function () {
         $newItem.append($removeButton);
     });
 
-    $("body").on('click', '[data-select-expiry]', function () {
+    $("body").on('change', '[data-select-expiry]', function () {
         let li = $(this).parents('li');
         if ($(this).val() === 'unlimited') {
             $(this).siblings('input').hide();
@@ -84,7 +100,7 @@ $(document).ready(function () {
         li.attr('expiry-type', $(this).val());
     });
 
-    $("body").on('click', '[data-select-condition]', function () {
+    $("body").on('change', '[data-select-condition]', function () {
         let li = $(this).parents('li');
         let input = $(this).siblings('input');
         if ($(this).val() === '') {
@@ -104,6 +120,15 @@ $(document).ready(function () {
 
     $('body').on('input', '[data-condition-value]', function () {
         $(this).parents('li').attr('condition-value', $(this).val());
+    });
+
+    $("body").on("change", '[data-select-brand]', function () {
+        let li = $(this).parents('li');
+        if ($(this).val() !== '') {
+            li.attr('brand-id', $(this).val());
+        } else {
+            li.removeAttr('brand-id');
+        }
     });
 
 });

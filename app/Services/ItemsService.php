@@ -7,6 +7,7 @@ use App\Exceptions\CannotStoreItemException;
 use App\Exceptions\CannotUpdateItemException;
 use App\Models\ActionLog;
 use App\Models\Item;
+use App\Models\ItemBrand;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,7 @@ class ItemsService
     {
         return Item::query()
             ->orderBy('name')
-            ->with('category')->get();
+            ->with(['brands', 'category'])->get();
     }
 
     /**
@@ -28,9 +29,14 @@ class ItemsService
      */
     public function store(array $data): void
     {
+        $brands = $data['brands'];
+        unset($data['brands']);
         DB::beginTransaction();
         try {
             $item = Item::query()->create($data);
+            ItemBrand::query()->insert(array_map(function ($brand) use ($item) {
+                return ['item_id' => $item->id, 'name' => $brand, 'created_at' => now(), 'updated_at' => now()];
+            }, $brands));
             ActionLogger::log(ActionLog::STORE, ActionLog::ITEM, $item?->id, ['name' => $item?->name]);
             DB::commit();
         } catch (\Exception $e) {
@@ -48,8 +54,16 @@ class ItemsService
      */
     public function update(int $itemId, array $data): void
     {
+        $brands = $data['brands'] ?? null;
+        unset($data['brands']);
+
         DB::beginTransaction();
         try {
+            if ($brands) {
+                ItemBrand::query()->insert(array_map(function ($brand) use ($itemId) {
+                    return ['item_id' => $itemId, 'name' => $brand, 'created_at' => now(), 'updated_at' => now()];
+                }, $brands));
+            }
             Item::query()->lockForUpdate()->where('id', '=', $itemId)->update($data);
             ActionLogger::log(ActionLog::UPDATE, ActionLog::ITEM, $itemId, ['name' => Item::query()->where('id', '=', $itemId)->first()?->name]);
             DB::commit();

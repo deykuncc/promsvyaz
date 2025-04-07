@@ -1,7 +1,6 @@
 <tr data-item-name="{{$item->name}}" data-item-id="{{$item->id}}">
     <th>{{$item->name}}</th>
     <td>{{$item->category->name}}</td>
-    <td>{{$item->brand}}</td>
     <td>{{$item->model}}</td>
     <td>
         <div class="d-flex align-items-center gap-3">

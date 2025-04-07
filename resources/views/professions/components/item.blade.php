@@ -2,7 +2,9 @@
     <div class="d-flex align-items-center w-75 justify-content-between">
         <div class="d-flex flex-column mxw">
             <span>{{$item->name}}</span>
-            <span class="text-secondary">{{$item->brand}}</span>
+            @if(!empty($remove) && $remove)
+                <span class="text-secondary">{{$professionItem?->brand?->name}}</span>
+            @endif
         </div>
         @if(!empty($remove) && $remove === true)
             <div class="d-flex flex-column">
@@ -27,7 +29,7 @@
     </div>
 
     <button
-        item-brand="{{$item->brand ?? ''}}"
+        item-brands="{{json_encode($item->brands)}}"
         item-name="{{$item->name}}"
         item-id="{{$item->id}}"
         category-name="{{$item->category->name_eng}}"

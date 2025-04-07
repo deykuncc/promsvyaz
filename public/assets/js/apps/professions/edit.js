@@ -14,6 +14,12 @@ function update(removedItems) {
         let expiryValue = li.attr('expiry-value') ?? 0;
         let conditionValue = li.attr('condition-value') ?? null;
         let conditionType = li.attr('condition-type') ?? null;
+        let brand = li.attr('brand-id') ?? null;
+
+        if (brand === null || brand === undefined) {
+            error = true;
+            return showToast(`Выберите бренд для ${itemName}`, 0);
+        }
 
         if (categoryName === 'clear' && (isNaN(conditionType) || conditionValue <= 0 || conditionValue === undefined || isNaN(conditionValue))) {
             error = true;
@@ -37,6 +43,7 @@ function update(removedItems) {
             expiryValue: !isNaN(parseInt(expiryValue)) ? parseInt(expiryValue) : null,
             conditionType: categoryName === 'clear' ? parseInt(conditionType) : null,
             conditionValue: categoryName === 'clear' ? parseInt(conditionValue) : null,
+            brandId: brand,
         });
     });
 

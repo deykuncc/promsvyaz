@@ -17,6 +17,7 @@ class ProfessionItem extends Model
     protected $fillable = [
         'profession_id',
         'item_id',
+        'brand_id',
         'expiry_months',
         'quantity_type',
         'quantity_value',
@@ -48,5 +49,10 @@ class ProfessionItem extends Model
         return Attribute::make(
             get: (fn($val) => $val != null ? ConditionType::getValue($val) : "-")
         );
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(ItemBrand::class, 'brand_id', 'id');
     }
 }

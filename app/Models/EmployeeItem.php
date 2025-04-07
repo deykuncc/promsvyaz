@@ -15,7 +15,7 @@ class EmployeeItem extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'employee_items';
-    protected $fillable = ['employee_id', 'item_id', 'size_id', 'quantity', 'quantity_type', 'received', 'expiry_date', 'usage_months', 'is_active', 'issued_date', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['employee_id', 'item_id', 'brand_id', 'size_id', 'quantity', 'quantity_type', 'received', 'expiry_date', 'usage_months', 'is_active', 'issued_date', 'created_at', 'updated_at', 'deleted_at'];
     public $timestamps = true;
 
     public function employee(): BelongsTo
@@ -55,5 +55,10 @@ class EmployeeItem extends Model
     public function quantityTypeOrig(): int
     {
         return $this->attributes['quantity_type'] ?? 0;
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(ItemBrand::class, 'brand_id', 'id');
     }
 }

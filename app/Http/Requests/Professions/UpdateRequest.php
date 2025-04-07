@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
             'items.*.conditionType' => ['nullable', 'integer', 'in:1,3,4'],
             'removed_items' => ['nullable', 'array'],
             'removed_items.*' => ['exists:items,id'],
+            'items.*.brandId' => ['integer', 'exists:item_brands, id'],
         ];
     }
 
@@ -39,6 +40,7 @@ class UpdateRequest extends FormRequest
             'items.*.conditionValue.integer' => 'Укажите количество',
             'items.*.conditionValue.max' => 'Количество превышает :max',
             'items.*.conditionType.in' => 'Укажите количество',
+            'items.*.brandId.in' => 'Бренд не найден',
         ];
     }
 }

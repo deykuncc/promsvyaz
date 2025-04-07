@@ -1,6 +1,6 @@
 <tr data-item-name="{{$item->item->name}}" data-item-has-id="{{$item->item->id}}">
     <td>{{$item->item->name}}</td>
-    <td>{{$item->item->brand}}</td>
+    <td>{{$item?->brand?->name}}</td>
     <td>
         {{ "{$item->quantity} {$item->quantity_type}" }}
     </td>

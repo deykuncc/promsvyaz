@@ -25,6 +25,7 @@ class UpdateItemsRequest extends FormRequest
             'items.*.conditionType' => ['required', Rule::in(ConditionType::ids())],
             'items.*.conditionValue' => ['required', 'min:1'],
             'items.*.issuedDate' => ['required', 'date', 'date_format:d.m.Y'],
+            'items.*.brandId' => ['required', 'exists:item_brands,id'],
             'deleted_items' => ['nullable', 'array']
         ];
     }
@@ -43,6 +44,8 @@ class UpdateItemsRequest extends FormRequest
             'items.*.issuedDate.required' => 'Укажите дату получения',
             'items.*.issuedDate.date' => 'Неправильный форматы даты получения',
             'items.*.issuedDate.date_format' => 'Неправильный форматы даты получения',
+            'items.*.brandId.required' => 'Выберите бренд',
+            'items.*.brandId.exists' => 'Выберите бренд',
         ];
     }
 }

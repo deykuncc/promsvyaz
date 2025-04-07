@@ -83,6 +83,7 @@ function addItem() {
     ajaxGetItems().then((response) => {
         for (let i in response.items) {
             let item = response.items[i];
+            let brands = JSON.stringify(item?.brands);
             let category = item.category.name_eng;
 
             let conditionType = 0;
@@ -110,7 +111,7 @@ function addItem() {
                 data-condition-value="1"
                 data-condition-type="${conditionType}"
                 data-set-after-type-size="${typeSize}"
-                data-brand-name="${item.brand ?? ''}"
+                data-brands='${brands}'
                 value="${item.id}" >${item.name} </option>`;
         }
 
@@ -123,7 +124,11 @@ function addItem() {
                     ${itemsHtml}
                 </select>
             </td>
-            <td><span data-brand-name-value></span></td>
+            <td>
+                <select data-brand-select style="width: 200px;" class="form-select">
+                    <option selected>Выберите</option>
+                </select>
+            </td>
             <td>
                 <div class="d-flex align-items-center gap-1">
                     <input autocomplete="off" data-condition-value value="1" style="width: 60px" class="form-control">
@@ -228,10 +233,11 @@ function addItemOfProfession(item) {
         data-condition-value="${conditionValue}"
         data-set-after-type-size="${typeSize}"
         data-date-type="${!expiry ? 'unlimited' : 'months'}"
+        data-brand-id="${item?.brand?.id}"
         ${dataDateValue}
         >
             <td>${item.item.name}</td>
-            <td>${item.item.brand ?? ""}</td>
+            <td>${item?.brand.name ?? ""}</td>
             <td>
                 <div class="d-flex align-items-center gap-1">
                    <input autocomplete="off" data-condition-value value="${conditionValue}" style="width: 60px" class="form-control">
@@ -366,13 +372,22 @@ $(document).ready(function () {
         let option = $(this).find("option:selected");
         let itemId = $(this).val();
         let itemName = option.text();
-        let brandName = option.attr('data-brand-name');
+        let brandsJson = JSON.parse(option.attr('data-brands'));
+        let brands = "";
+        for (let i in brandsJson) {
+            brands += `<option value="${brandsJson[i]['id']}">${brandsJson[i]['name']}</option>`;
+        }
+
         $(this).parents('tr').attr('data-item-id', itemId);
         $(this).parents('tr').attr('data-item-name', itemName);
         $(this).parents('tr').attr('data-condition-type', option.attr('data-condition-type'));
         $(this).parents('tr').attr('data-set-after-type-size', option.attr('data-set-after-type-size'));
-        $(this).parents('tr').find('td').find('span[data-brand-name-value]').text(brandName);
+        $(this).parents('tr').find('select[data-brand-select]').append(brands)
         setSelectors();
+    });
+
+    $('body').on('change', 'select[data-brand-select]', function () {
+        $(this).parents('tr').attr('data-brand-id', $(this).val());
     });
 
     $('body').on('change', 'select[data-condition-type]', function () {

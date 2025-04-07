@@ -49,7 +49,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Отчество</label>
-                        <input autocomplete="off" {{$employee->middle_name}} type="search" class="form-control"
+                        <input autocomplete="off" value="{{$employee->middle_name}}" type="search" class="form-control"
                                id="middleName"
                                placeholder="Иванович">
                     </div>

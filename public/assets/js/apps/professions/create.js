@@ -11,20 +11,26 @@ function create() {
         let expiryValue = li.attr('expiry-value') ?? 0;
         let conditionValue = li.attr('condition-value') ?? 0;
         let conditionType = li.attr('condition-type') ?? null;
+        let brand = li.attr('brand-id') ?? null;
 
-        if (categoryName === 'clear' && (isNaN(conditionType) || conditionValue <= 0 || conditionValue === undefined || isNaN(conditionValue))){
+        if (brand === null || brand === undefined) {
             error = true;
-            return showToast(`Выберите количество для ${itemName}`);
+            return showToast(`Выберите бренд для ${itemName}`, 0);
+        }
+
+        if (categoryName === 'clear' && (isNaN(conditionType) || conditionValue <= 0 || conditionValue === undefined || isNaN(conditionValue))) {
+            error = true;
+            return showToast(`Выберите количество для ${itemName}`, 0);
         }
 
         if (expiryType === undefined || expiryType.length <= 0) {
             error = true;
-            return showToast(`Выберите срок эксплуатации для ${itemName}`);
+            return showToast(`Выберите срок эксплуатации для ${itemName}`, 0);
         }
 
         if (expiryType === 'months' && expiryValue <= 0 || isNaN(parseInt(expiryValue))) {
             error = true;
-            return showToast(`Укажите срок эксплуатации для ${itemName}`);
+            return showToast(`Укажите срок эксплуатации для ${itemName}`, 0);
         }
 
         items.push({
@@ -33,6 +39,7 @@ function create() {
             expiryValue: !isNaN(parseInt(expiryValue)) ? parseInt(expiryValue) : null,
             conditionType: categoryName === 'clear' ? parseInt(conditionType) : null,
             conditionValue: categoryName === 'clear' ? parseInt(conditionValue) : null,
+            brandId: brand,
         });
     });
 

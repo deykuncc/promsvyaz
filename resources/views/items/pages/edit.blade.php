@@ -45,7 +45,8 @@
 
                     <div class="mb-3">
                         <label for="professionName" class="form-label">Наименование СИЗ</label>
-                        <input autocomplete="off" type="search" class="form-control" value="{{$item->name}}" id="itemName"
+                        <input autocomplete="off" type="search" class="form-control" value="{{$item->name}}"
+                               id="itemName"
                                placeholder="Введите наименование СИЗ" required>
                     </div>
 
@@ -56,21 +57,57 @@
                                   placeholder="Введите эксплуатационные характеристики СИЗ">{{$item->description}}</textarea>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="brand" class="form-label">Торговое наименование</label>
-                        <input autocomplete="off" value="{{$item->brand}}" type="search" class="form-control" name="brand" id="itemBrand"
-                               placeholder="Введите торговое наименование СИЗ">
+                    <div class="mb-3" data-brand>
+                        <span class="form-label">Торговое наименование</span>
+                        @if(!$item->brands->isEmpty())
+                            @foreach($item->brands as $key => $brand)
+                                <div class="mb-3 d-flex gap-2">
+                                    <input autocomplete="off" value="{{$brand->name}}" readonly type="search"
+                                           class="form-control"
+                                           placeholder="Введите торговое наименование">
+                                    @if($item->brands->count() == ($key + 1))
+                                        <button data-action="newBrand" type="button"
+                                                class="btn btn-primary d-flex align-items-center">
+                                            <svg class="me-1" width="18px" height="18px" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4 12H20M12 4V20" stroke="#fff" stroke-width="2"
+                                                      stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                            </svg>
+                                        </button>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="mb-3 d-flex gap-2">
+                                <input autocomplete="off" type="search"
+                                       class="form-control"
+                                       data-brand-value
+                                       placeholder="Введите торговое наименование">
+                                <button data-action="newBrand" type="button"
+                                        class="btn btn-primary d-flex align-items-center">
+                                    <svg class="me-1" width="18px" height="18px" viewBox="0 0 24 24" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 12H20M12 4V20" stroke="#fff" stroke-width="2"
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="mb-3">
                         <label for="model" class="form-label">Модель, артикул</label>
-                        <input autocomplete="off" value="{{$item->model}}" type="search" class="form-control" name="model" id="itemModel"
-                               placeholder="Введите название СИЗ">
+                        <input autocomplete="off" value="{{$item->model}}" type="search" class="form-control"
+                               name="model" id="itemModel"
+                               placeholder="Модель, артикул">
                     </div>
 
                     <div class="mb-3">
                         <label for="model" class="form-label">Основание выдачи СИЗ</label>
-                        <input autocomplete="off" value="{{$item->norm_clause}}" type="search" class="form-control" name="normClause"
+                        <input autocomplete="off" value="{{$item->norm_clause}}" type="search" class="form-control"
+                               name="normClause"
                                id="normClause"
                                placeholder="П. 165">
                     </div>
@@ -88,6 +125,7 @@
 <script src="{{url('assets/js/plugins/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/custom/sweetalerts.js')}}"></script>
 <script src="{{url('assets/js/apps/items/edit.js')}}"></script>
+<script src="{{url('assets/js/apps/items/utils.js')}}"></script>
 
 </body>
 </html>

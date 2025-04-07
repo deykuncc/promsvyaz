@@ -38,6 +38,7 @@ class StoreRequest extends FormRequest
             'items.*.conditionType' => ['required', Rule::in(ConditionType::ids())],
             'items.*.conditionValue' => ['required', 'min:1'],
             'items.*.issuedDate' => ['required', 'date', 'date_format:d.m.Y'],
+            'items.*.brandId' => ['required', 'exists:item_brands,id'],
         ];
     }
 
@@ -86,6 +87,8 @@ class StoreRequest extends FormRequest
             'items.*.issuedDate.required' => 'Укажите дату получения',
             'items.*.issuedDate.date' => 'Неправильный форматы даты получения',
             'items.*.issuedDate.date_format' => 'Неправильный форматы даты получения',
+            'items.*.brandId.required' => 'Бренд не найден',
+            'items.*.brandId.exists' => 'Бренд не найден',
         ];
     }
 }

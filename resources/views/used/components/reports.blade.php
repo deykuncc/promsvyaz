@@ -16,7 +16,7 @@
                 </div>
                 <div class="col mt-2">
                     <label for="days" class="text-secondary">Дата ведомости</label>
-                    <input autocomplete="off" autocapitalize="off" name="statementDate" id="statementDate" type="search" value="" class="form-control"
+                    <input autocomplete="off" data-date autocapitalize="off" name="statementDate" id="statementDate" type="search" value="" class="form-control"
                            placeholder="365">
                 </div>
             </div>

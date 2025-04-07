@@ -102,6 +102,7 @@ class EmployeesService
                     $employeeItems[] = [
                         'employee_id' => $employee->id,
                         'item_id' => $item['id'],
+                        'brand_id' => $item['brandId'],
                         'size_id' => $item['size'] === 'without' ? null : $item['size'],
                         'issued_date' => $employee->employment_date,
                         'expiry_date' => null,
@@ -119,6 +120,7 @@ class EmployeesService
                     $employeeItems[] = [
                         'employee_id' => $employee->id,
                         'item_id' => $item['id'],
+                        'brand_id' => $item['brandId'],
                         'size_id' => $item['size'] === 'without' ? null : $item['size'],
                         'issued_date' => (clone $dateHired),
                         'expiry_date' => $expiryDate,
@@ -149,6 +151,7 @@ class EmployeesService
                     $employeeItems[] = [
                         'employee_id' => $employee->id,
                         'item_id' => $item['id'],
+                        'brand_id' => $item['brandId'],
                         'size_id' => $item['size'] === 'without' ? null : $item['size'],
                         'issued_date' => $employee->employment_date,
                         'expiry_date' => null,
@@ -176,6 +179,7 @@ class EmployeesService
                         $employeeItems[] = [
                             'employee_id' => $employee->id,
                             'item_id' => $item['id'],
+                            'brand_id' => $item['brandId'],
                             'size_id' => $item['size'] === 'without' ? null : $item['size'],
                             'issued_date' => ($i === $issueCount - 1) ? (clone Carbon::createFromFormat('d.m.Y', $item['issuedDate']))->format('Y-m-d H:i:s') : $issuedDate,
                             'expiry_date' => ($i === $issueCount - 1) ? (clone Carbon::createFromFormat('d.m.Y', $item['issuedDate']))->addMonths($usagePeriod)->format('Y-m-d H:i:s') : $expiryDate,
@@ -274,6 +278,7 @@ class EmployeesService
                 $itemsInsert[] = [
                     'employee_id' => $employee->id,
                     'item_id' => $item['id'],
+                    'brand_id' => $item['brandId'],
                     'size_id' => $sizeId,
                     'usage_months' => $item['expiryType'] == 'unlimited' ? null : $item['expiryValue'],
                     'expiry_date' => $expiryDate,

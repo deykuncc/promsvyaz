@@ -17,7 +17,7 @@ class StoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:128'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['nullable', 'string', 'max:1128'],
-            'brand' => ['nullable', 'string', 'max:1128'],
+            'brands' => ['array', 'min:1'],
             'model' => ['nullable', 'string', 'max:1128'],
             'norm_clause' => ['nullable', 'string', 'max:1128'],
         ];
@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
             'category_id.required' => 'Выберите категорию',
             'category_id.exists' => 'Категория не найдена',
             'description.max' => 'Описание не должно превышать :max символов',
-            'brand.max' => 'Торговое наименование не должно превышать :max символов',
+            'brands.min' => 'Введите торговое наименование',
             'model.max' => 'Модель, артикул не должно превышать :max символов',
             'norm_clause.max' => "Пункт норм превышает :max символов"
         ];

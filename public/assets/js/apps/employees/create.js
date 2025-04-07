@@ -20,9 +20,14 @@ function create() {
         let dateType = $(this).attr('data-date-type');
         let dateValue = $(this).attr('data-date-value');
         let itemName = $(this).attr('data-item-name');
+        let brandId = $(this).attr('data-brand-id');
         let conditionType = $(this).attr('data-condition-type');
         let conditionValue = $(this).attr('data-condition-value');
         let issuedDate = $(this).attr('data-issued-date');
+
+        if (!brandId || brandId === undefined) {
+            return showToast(`Выберите бренд для ${itemName}`, 0);
+        }
 
         if (!size || size === undefined) {
             return showToast(`Выберите размер для ${itemName}`, 0);
@@ -50,7 +55,8 @@ function create() {
                 dateValue: dateValue,
                 conditionType: conditionType,
                 conditionValue: conditionValue,
-                issuedDate: issuedDate
+                issuedDate: issuedDate,
+                brandId: brandId,
             }
         );
     });
