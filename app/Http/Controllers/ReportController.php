@@ -47,11 +47,12 @@ class ReportController extends Controller
     {
         $sizData = EmployeeItem::query()
             ->select(
-                'items.brand as name',
+                'item_brands.name as brand',
                 'sizes.size as size',
                 DB::raw("SUM(employee_items.quantity) as count"),
                 'departments.name as department',
             )
+            ->with('brand')
             ->where('is_active', true)
             ->where('employee_items.deleted_at', null)
             ->when(($untilAt = $request->input('until_at', 31)), function ($q) use ($untilAt) {
@@ -63,9 +64,10 @@ class ReportController extends Controller
             ->join('sizes', 'employee_items.size_id', '=', 'sizes.id')
             ->join('employees', 'employees.id', '=', 'employee_items.employee_id')
             ->join('departments', 'employees.department_id', '=', 'departments.id')
-            ->groupBy('items.brand', 'sizes.size', 'departments.name')
+            ->join('item_brands','employee_items.brand_id','=','item_brands.id')
+            ->groupBy('item_brands.name', 'sizes.size', 'departments.name')
             ->get()
-            ->groupBy(['name', 'department'])
+            ->groupBy(['brand', 'department'])
             ->map(function ($group, $name) {
                 return $group->map(function ($items, $department) use ($name) {
                     return [

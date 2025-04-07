@@ -133,7 +133,7 @@
                 @foreach($items as $item)
                     <tr>
                         <td>{{$item->item->name}}</td>
-                        <td>{{ implode(',',array_filter([$item->item->model,$item->item->brand, $item->item->description],fn($val)=> $val != null))  }}</td>
+                        <td>{{ implode(',',array_filter([$item->item->model,$item?->brand?->name, $item->item->description],fn($val)=> $val != null))  }}</td>
                         <td>{{$item->issued_date != null ? \Carbon\Carbon::parse($item->issued_date)->format('d.m.Y') : null  }}</td>
                         <td>{{$item->quantity}}</td>
                         <td></td>
