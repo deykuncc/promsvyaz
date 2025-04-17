@@ -55,25 +55,34 @@
                     </div>
 
                     <div class="mb-3" data-brand>
-                        <span class="form-label">Торговое наименование</span>
-                        <div class="mb-3 d-flex gap-2">
-                            <input autocomplete="off" type="search" class="form-control" data-brand-value
-                                   placeholder="Введите торговое наименование">
+                        <div class="d-grid" style="grid-template-columns: auto auto 165px;">
+                            <span class="form-label">Торговое наименование</span>
+                            <span class="form-label">Модель</span>
+                            <span class="form-label">Артикул</span>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <input autocomplete="off" type="search"
+                                   class="form-control w-25"
+                                   placeholder="Введите торговое наименование" data-brand-value>
+                            <input autocomplete="off" type="search"
+                                   class="form-control w-25"
+                                   placeholder="Введите модель" data-model-value>
+                            <input autocomplete="off" type="search"
+                                   class="form-control w-25"
+                                   placeholder="Введите артикул" data-article-value>
+                        </div>
+                        <div class="d-flex justify-content-center">
                             <button data-action="newBrand" type="button"
                                     class="btn btn-primary d-flex align-items-center">
-                                <svg class="me-1" width="18px" height="18px" viewBox="0 0 24 24" fill="none"
+                                <span class="me-2">Добавить</span>
+                                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4 12H20M12 4V20" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                    <path d="M4 12H20M12 4V20" stroke="#fff" stroke-width="2"
+                                          stroke-linecap="round"
                                           stroke-linejoin="round"></path>
                                 </svg>
                             </button>
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="model" class="form-label">Модель, артикул</label>
-                        <input autocomplete="off" type="search" class="form-control" name="model" id="itemModel"
-                               placeholder="Введите название СИЗ">
                     </div>
 
                     <div class="mb-3">

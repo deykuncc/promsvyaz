@@ -8,11 +8,20 @@ function create() {
 
     $("[data-brand-value]").each(function () {
         let name = $(this).val();
+        let model = $(this).siblings('[data-model-value]').val();
+        let article = $(this).siblings('[data-article-value]').val();
+
         if (name.length > 0) {
-            brands.push($(this).val());
+            brands.push(
+                {
+                    id: null,
+                    name: name,
+                    model: model,
+                    article: article,
+                }
+            );
         }
     });
-
 
     if (brands.length <= 0) {
         return showToast("Введите торговое наименование", 0);

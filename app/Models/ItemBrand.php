@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ItemBrand extends Model
 {
     protected $table = 'item_brands';
-    protected $fillable = ['item_id', 'name'];
+    protected $fillable = ['item_id', 'name', 'model', 'article'];
     public $timestamps = true;
 
     public function item(): BelongsTo

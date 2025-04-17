@@ -133,7 +133,7 @@
                 @foreach($items as $item)
                     <tr>
                         <td>{{$item->item->name}}</td>
-                        <td>{{ implode(',',array_filter([$item->item->model,$item?->brand?->name, $item->item->description],fn($val)=> $val != null))  }}</td>
+                        <td>{{ implode(',',array_filter([$item?->brand?->model, $item?->brand?->article, $item?->brand?->name, $item?->brand?->description],fn($val)=> $val != null))  }}</td>
                         <td>{{$item->issued_date != null ? \Carbon\Carbon::parse($item->issued_date)->format('d.m.Y') : null  }}</td>
                         <td>{{$item->quantity}}</td>
                         <td></td>
@@ -150,7 +150,7 @@
         <div class="d-flex" style="margin-top: 14px;">
             <div class="col" style="width: 100%; text-align: left">
                 <p>* - информация указывается только для дерматологических СИЗ</p>
-                <p>** - информация указывается для всех СИЗ, кроме дерматологических СИЗ и СИЗ однократконго
+                <p>** - информация указывается для всех СИЗ, кроме дерматологических СИЗ и СИЗ однократного
                     применения</p>
             </div>
         </div>

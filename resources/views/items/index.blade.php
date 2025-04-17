@@ -108,12 +108,12 @@
         </div>
         <table class="table">
             <thead>
-            @include('includes.table-rows',['rows'=>['Название', 'Категория', 'Модель', 'Действия']])
+            @include('includes.table-rows',['rows'=>['Название', 'Категория', 'Действия']])
             </thead>
             <tbody>
             @if(!$items->isEmpty())
                 @foreach($items as $item)
-                    @include('items.components.item',['item'=>$item])
+                    @include('items.components.item', ['item'=>$item])
                 @endforeach
             @endif
             </tbody>

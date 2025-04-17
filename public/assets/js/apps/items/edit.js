@@ -9,9 +9,20 @@ function update() {
     let brands = [];
 
     $("[data-brand-value]").each(function () {
+        let id = parseInt($(this).parent().attr('brand-id')) ?? null;
         let name = $(this).val();
+        let model = $(this).siblings('[data-model-value]').val();
+        let article = $(this).siblings('[data-article-value]').val();
+
         if (name.length > 0) {
-            brands.push($(this).val());
+            brands.push(
+                {
+                    id: isNaN(id) ? null : id,
+                    name: name,
+                    model: model,
+                    article: article,
+                }
+            );
         }
     });
 

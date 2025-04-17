@@ -18,6 +18,10 @@ class UpdateRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['nullable', 'string', 'max:1128'],
             'brands' => ['nullable', 'array'],
+            'brands.*.id' => ['nullable', 'exists:item_brands,id'],
+            'brands.*.name' => ['required', 'string'],
+            'brands.*.model' => ['nullable', 'string'],
+            'brands.*.article' => ['nullable', 'string'],
             'model' => ['nullable', 'string', 'max:1128'],
             'norm_clause' => ['nullable', 'string', 'max:1128'],
         ];
@@ -34,6 +38,8 @@ class UpdateRequest extends FormRequest
             'description.max' => 'Описание не должно превышать :max символов',
             'brands.array' => 'Заполните торговое наименование',
             'brands.min' => 'Заполните торговое наименование',
+            'brands.*.name.required' => 'Заполните торговое наименование',
+            'brands.*.name.string' => 'Заполните торговое наименование',
             'model.max' => 'Модель не должно превышать :max символов',
             'norm_clause.max' => "Пункт норм превышает :max символов"
         ];

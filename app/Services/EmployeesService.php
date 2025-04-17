@@ -144,6 +144,13 @@ class EmployeesService
     private function storeItems(Employee $employee, array $items): void
     {
         if (!empty($items) && is_array($items)) {
+
+            if (Carbon::parse($employee->employment_date)->diffInYears(now()) > 3) {
+                $employmentDateMax3Years = now()->subYears(3)->format('Y-m-d H:i:s');
+            } else {
+                $employmentDateMax3Years = $employee->employment_date;
+            }
+
             $employeeItems = [];
 
             foreach ($items as $item) {
@@ -153,7 +160,7 @@ class EmployeesService
                         'item_id' => $item['id'],
                         'brand_id' => $item['brandId'],
                         'size_id' => $item['size'] === 'without' ? null : $item['size'],
-                        'issued_date' => $employee->employment_date,
+                        'issued_date' => $employmentDateMax3Years,
                         'expiry_date' => null,
                         'usage_months' => null,
                         'quantity' => $item['conditionValue'],
@@ -165,7 +172,7 @@ class EmployeesService
                 } else {
                     $usagePeriod = (int)$item['dateValue'];
 
-                    $dateHired = Carbon::parse($employee->employment_date);
+                    $dateHired = Carbon::parse($employmentDateMax3Years);
                     $currentDate = Carbon::now();
 
                     $diffInMonths = $dateHired->diffInMonths($currentDate);

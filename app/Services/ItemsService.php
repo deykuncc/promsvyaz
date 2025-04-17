@@ -35,7 +35,7 @@ class ItemsService
         try {
             $item = Item::query()->create($data);
             ItemBrand::query()->insert(array_map(function ($brand) use ($item) {
-                return ['item_id' => $item->id, 'name' => $brand, 'created_at' => now(), 'updated_at' => now()];
+                return ['item_id' => $item->id, 'name' => $brand['name'], 'model' => $brand['model'], 'article' => $brand['article'], 'created_at' => now(), 'updated_at' => now()];
             }, $brands));
             ActionLogger::log(ActionLog::STORE, ActionLog::ITEM, $item?->id, ['name' => $item?->name]);
             DB::commit();
@@ -60,9 +60,7 @@ class ItemsService
         DB::beginTransaction();
         try {
             if ($brands) {
-                ItemBrand::query()->insert(array_map(function ($brand) use ($itemId) {
-                    return ['item_id' => $itemId, 'name' => $brand, 'created_at' => now(), 'updated_at' => now()];
-                }, $brands));
+                $this->updateBrands($itemId, $brands);
             }
             Item::query()->lockForUpdate()->where('id', '=', $itemId)->update($data);
             ActionLogger::log(ActionLog::UPDATE, ActionLog::ITEM, $itemId, ['name' => Item::query()->where('id', '=', $itemId)->first()?->name]);
@@ -71,6 +69,36 @@ class ItemsService
             Log::error($e->getMessage());
             DB::rollBack();
             throw new CannotUpdateItemException();
+        }
+    }
+
+    public function updateBrands(int $itemId, array $brands): void
+    {
+        $now = now();
+
+        $inserts = [];
+        foreach ($brands as $brand) {
+            if ($brand['id'] === null) {
+                $inserts[] = [
+                    'item_id' => $itemId,
+                    'name' => $brand['name'],
+                    'model' => $brand['model'],
+                    'article' => $brand['article'],
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            } else {
+                ItemBrand::query()->where('id', $brand['id'])->update([
+                    'name' => $brand['name'],
+                    'model' => $brand['model'],
+                    'article' => $brand['article'],
+                    'updated_at' => $now,
+                ]);
+            }
+        }
+
+        if (!empty($inserts)) {
+            ItemBrand::query()->insert($inserts);
         }
     }
 
